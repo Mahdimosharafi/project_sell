@@ -15,6 +15,9 @@ function matin_parto_enqueue_assets() {
     wp_enqueue_style( 'matin-parto-style', get_stylesheet_uri(), array(), '0.1.0' );
     wp_enqueue_style( 'matin-parto-main', get_template_directory_uri() . '/assets/css/main.css', array( 'matin-parto-style' ), '0.1.1' );
     wp_enqueue_style( 'matin-parto-polish', get_template_directory_uri() . '/assets/css/header-footer-polish.css', array( 'matin-parto-main' ), '0.1.0' );
+    if ( is_front_page() ) {
+        wp_enqueue_style( 'matin-parto-home', get_template_directory_uri() . '/assets/css/home.css', array( 'matin-parto-polish' ), '0.1.0' );
+    }
     wp_enqueue_script( 'matin-parto-main', get_template_directory_uri() . '/assets/js/main.js', array(), '0.1.1', true );
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
