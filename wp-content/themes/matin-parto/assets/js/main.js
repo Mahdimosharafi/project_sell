@@ -5,4 +5,20 @@ document.addEventListener('DOMContentLoaded', () => {
             link.closest('li')?.classList.add('is-current');
         }
     });
+
+    const toggle = document.querySelector('.mp-search-toggle');
+    const panel = document.querySelector('.mp-search-panel');
+    if (toggle && panel) {
+        toggle.addEventListener('click', () => {
+            const isOpen = !panel.hasAttribute('hidden');
+            if (isOpen) {
+                panel.setAttribute('hidden', '');
+                toggle.setAttribute('aria-expanded', 'false');
+            } else {
+                panel.removeAttribute('hidden');
+                toggle.setAttribute('aria-expanded', 'true');
+                panel.querySelector('input[type="search"]')?.focus();
+            }
+        });
+    }
 });
