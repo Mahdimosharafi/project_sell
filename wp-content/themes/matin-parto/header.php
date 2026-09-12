@@ -1,22 +1,17 @@
 <?php
-/**
- * Header — Matin Parto reference UI.
- */
 defined( 'ABSPATH' ) || exit;
-?>
-<!doctype html>
+?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php wp_head(); ?>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-
 <div class="mp-site">
     <div class="mp-announcement" role="status">
-        <div class="mp-container mp-announcement__inner">
+        <div class="mp-announcement__inner">
             <span class="mp-announcement__icon" aria-hidden="true">ⓘ</span>
             <span>تسلط بر زبان انگلیسی، کلید موفقیت شماست!</span>
         </div>
