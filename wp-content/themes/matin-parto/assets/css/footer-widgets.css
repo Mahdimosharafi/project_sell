@@ -10,13 +10,16 @@
 .mp-footer-column .widget a{transition:color .2s ease}
 .mp-footer-column .widget a:hover{color:var(--mp-rose)}
 
-/* Each social-network widget is one item; multiple items stay side-by-side. */
-.mp-footer-about .widget_matin_parto_social_widget{display:inline-flex;width:auto;margin:0 0 0 8px;vertical-align:middle}
-.mp-footer-about .widget_matin_parto_social_widget .mp-social-widget__item{display:inline-flex}
-.mp-social-widget__link{width:30px!important;height:30px!important;margin:0!important;border-radius:50%;display:grid!important;place-items:center;background:#eee8e6;color:#6f5d5f!important;transition:transform .2s ease,background .2s ease,color .2s ease}
+/* One social widget contains all networks and displays them together. */
+.mp-social-widget{width:100%;margin-top:10px}
+.mp-social-widget__items{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:8px;direction:rtl}
+.mp-social-widget__link{width:30px!important;height:30px!important;margin:0!important;padding:0!important;border-radius:50%;display:grid!important;place-items:center;background:#eee8e6;color:#6f5d5f!important;text-decoration:none!important;transition:transform .2s ease,background .2s ease,color .2s ease}
 .mp-social-widget__link:hover{background:#a58e8f;color:#fff!important;transform:translateY(-2px)}
 .mp-social-widget__icon-image{width:16px;height:16px;object-fit:contain;border-radius:3px;display:block}
 .mp-social-widget__icon-text{font-size:14px;line-height:1}
+
+.mp-social-widget-form .description{font-size:12px}
+.mp-social-widget-form label{display:block;margin-bottom:4px;font-size:12px}
 
 @media(max-width:820px){
   .mp-footer-column .widget-title{font-size:13px}
@@ -25,7 +28,6 @@
 @media(max-width:560px){
   .mp-footer-main{direction:ltr}
   .mp-footer-main > .mp-footer-column{direction:rtl}
-  .mp-footer-about .widget_matin_parto_social_widget{margin-left:6px}
   .mp-social-widget__link{width:28px!important;height:28px!important}
   .mp-social-widget__icon-image{width:14px;height:14px}
 }
