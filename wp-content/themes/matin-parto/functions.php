@@ -30,10 +30,10 @@ function matin_parto_enqueue_assets() {
     $theme_dir = get_template_directory();
     $theme_uri = get_template_directory_uri();
 
-    $style_path = $theme_dir . '/style.css';
-    $main_path  = $theme_dir . '/assets/css/main.css';
+    $style_path  = $theme_dir . '/style.css';
+    $main_path   = $theme_dir . '/assets/css/main.css';
     $polish_path = $theme_dir . '/assets/css/header-footer-polish.css';
-    $home_path  = $theme_dir . '/assets/css/home.css';
+    $home_path   = $theme_dir . '/assets/css/home.css';
     $script_path = $theme_dir . '/assets/js/main.js';
 
     wp_enqueue_style(
@@ -75,6 +75,90 @@ function matin_parto_enqueue_assets() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
+
+/**
+ * Footer controls in the WordPress Customizer.
+ * The actual footer content is managed through Appearance > Widgets.
+ */
+function matin_parto_customize_register( $wp_customize ) {
+    $wp_customize->add_section(
+        'matin_parto_footer',
+        array(
+            'title'       => 'فوتر و پایین سایت',
+            'priority'    => 160,
+            'description' => 'محتوای اصلی ستون‌های فوتر را از بخش ابزارک‌ها مدیریت کنید. اینجا فقط تنظیمات نوار پایینی فوتر قرار دارد.',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'matin_parto_footer_copyright',
+        array(
+            'default'           => 'ماتین پرتو © 2026',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'matin_parto_footer_copyright',
+        array(
+            'label'   => 'متن کپی‌رایت',
+            'section' => 'matin_parto_footer',
+            'type'    => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'matin_parto_footer_note',
+        array(
+            'default'           => 'طراحی و توسعه با وردپرس',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    $wp_customize->add_control(
+        'matin_parto_footer_note',
+        array(
+            'label'   => 'متن سمت چپ نوار پایینی',
+            'section' => 'matin_parto_footer',
+            'type'    => 'text',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'matin_parto_footer_privacy_url',
+        array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        )
+    );
+    $wp_customize->add_control(
+        'matin_parto_footer_privacy_url',
+        array(
+            'label'       => 'لینک حریم خصوصی',
+            'description' => 'در صورت خالی بودن، لینک غیرفعال نمایش داده می‌شود.',
+            'section'     => 'matin_parto_footer',
+            'type'        => 'url',
+        )
+    );
+
+    $wp_customize->add_setting(
+        'matin_parto_footer_terms_url',
+        array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        )
+    );
+    $wp_customize->add_control(
+        'matin_parto_footer_terms_url',
+        array(
+            'label'       => 'لینک قوانین و مقررات',
+            'description' => 'در صورت خالی بودن، لینک غیرفعال نمایش داده می‌شود.',
+            'section'     => 'matin_parto_footer',
+            'type'        => 'url',
+        )
+    );
+}
+add_action( 'customize_register', 'matin_parto_customize_register' );
+
+require_once get_template_directory() . '/inc/footer-widgets.php';
 
 function matin_parto_fallback_menu() {
     echo '<ul class="mp-nav__list">';
