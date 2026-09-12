@@ -1,20 +1,31 @@
-/* Footer widgets: editable layout + classic Widgets screen support */
+/* Only the selected footer sections are widget-editable. */
 .mp-footer-main{direction:ltr}
 .mp-footer-main > .mp-footer-column{direction:rtl;text-align:right}
 .mp-footer-column .widget{width:100%;margin:0 0 12px}
 .mp-footer-column .widget:last-child{margin-bottom:0}
-.mp-footer-column .widget-title{margin:0 0 11px;color:#373032;font-size:12px;font-weight:700}
-.mp-footer-column .widget p,.mp-footer-column .widget a{color:#746b6d;font-size:9px}
+.mp-footer-column .widget-title{margin:0 0 11px;color:#373032;font-size:14px;font-weight:700;line-height:1.7}
+.mp-footer-column .widget p,.mp-footer-column .widget a{color:#746b6d;font-size:11px;line-height:1.9}
 .mp-footer-column .widget ul{list-style:none;margin:0;padding:0}
 .mp-footer-column .widget li{margin:0 0 6px;padding:0}
 .mp-footer-column .widget a{transition:color .2s ease}
 .mp-footer-column .widget a:hover{color:var(--mp-rose)}
-.mp-footer-social-widget-area{width:100%;margin-top:5px}
-.mp-social-widget__items{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.mp-social-widget__link{width:29px!important;height:29px!important;margin:0!important;border-radius:50%;display:grid!important;place-items:center;background:#eee8e6;color:#6f5d5f!important;transition:transform .2s ease,background .2s ease,color .2s ease}
+
+/* Each social-network widget is one item; multiple items stay side-by-side. */
+.mp-footer-about .widget_matin_parto_social_widget{display:inline-flex;width:auto;margin:0 0 0 8px;vertical-align:middle}
+.mp-footer-about .widget_matin_parto_social_widget .mp-social-widget__item{display:inline-flex}
+.mp-social-widget__link{width:30px!important;height:30px!important;margin:0!important;border-radius:50%;display:grid!important;place-items:center;background:#eee8e6;color:#6f5d5f!important;transition:transform .2s ease,background .2s ease,color .2s ease}
 .mp-social-widget__link:hover{background:#a58e8f;color:#fff!important;transform:translateY(-2px)}
-.mp-social-widget__link svg{width:15px;height:15px;display:block}
-.mp-social-widget__icon-image{width:15px;height:15px;object-fit:contain;border-radius:3px;display:block}
-.mp-social-widget__icon-text{font-size:13px;line-height:1}
-@media(max-width:820px){.mp-footer-main{direction:ltr}.mp-footer-main > .mp-footer-column{direction:rtl}.mp-footer-column .widget-title{font-size:10px}.mp-footer-column .widget p,.mp-footer-column .widget a{font-size:8px}}
-@media(max-width:560px){.mp-footer-main{direction:ltr}.mp-footer-main > .mp-footer-column{direction:rtl}.mp-social-widget__items{gap:7px}.mp-social-widget__link{width:26px!important;height:26px!important}.mp-social-widget__link svg,.mp-social-widget__icon-image{width:13px;height:13px}}
+.mp-social-widget__icon-image{width:16px;height:16px;object-fit:contain;border-radius:3px;display:block}
+.mp-social-widget__icon-text{font-size:14px;line-height:1}
+
+@media(max-width:820px){
+  .mp-footer-column .widget-title{font-size:13px}
+  .mp-footer-column .widget p,.mp-footer-column .widget a{font-size:11px}
+}
+@media(max-width:560px){
+  .mp-footer-main{direction:ltr}
+  .mp-footer-main > .mp-footer-column{direction:rtl}
+  .mp-footer-about .widget_matin_parto_social_widget{margin-left:6px}
+  .mp-social-widget__link{width:28px!important;height:28px!important}
+  .mp-social-widget__icon-image{width:14px;height:14px}
+}
