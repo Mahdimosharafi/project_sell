@@ -34,6 +34,22 @@ function matin_parto_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
 
 function matin_parto_customize_register( $wp_customize ) {
+    $wp_customize->add_section( 'matin_parto_home_cta', array(
+        'title'       => 'بنر «همین امروز شروع کنید»',
+        'priority'    => 155,
+        'description' => 'تصویر مستقل بنر پایین صفحه اصلی را از اینجا انتخاب کنید.',
+    ) );
+    $wp_customize->add_setting( 'matin_parto_cta_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+        'transport'         => 'refresh',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'matin_parto_cta_image', array(
+        'label'       => 'عکس خانم بنر',
+        'section'     => 'matin_parto_home_cta',
+        'description' => 'عکس فقط در بنر «همین امروز شروع کنید» نمایش داده می‌شود. اندازه نمایش دسکتاپ حدود ۲۵۰×۱۸۰ پیکسل است.',
+    ) ) );
+
     $wp_customize->add_section( 'matin_parto_footer', array(
         'title'       => 'فوتر و پایین سایت',
         'priority'    => 160,
@@ -62,6 +78,72 @@ function matin_parto_customize_register( $wp_customize ) {
     ) ) );
 }
 add_action( 'customize_register', 'matin_parto_customize_register' );
+
+function matin_parto_register_widgets() {
+    register_sidebar( array(
+        'name'          => 'شبکه‌های اجتماعی',
+        'id'            => 'matin-parto-social',
+        'description'   => 'محتوای این ابزارک هم در بنر «همین امروز شروع کنید» و هم در فوتر نمایش داده می‌شود.',
+        'before_widget' => '<div id="%1$s" class="mp-widget mp-social-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ) );
+}
+add_action( 'widgets_init', 'matin_parto_register_widgets' );
+
+class Matin_Parto_Social_Widget extends WP_Widget {
+    public function __construct() {
+        parent::__construct( 'matin_parto_social', 'شبکه‌های اجتماعی ماتین پارتو', array( 'description' => 'عنوان، توضیح و لینک شبکه‌های اجتماعی را یک‌جا تنظیم کنید.' ) );
+    }
+
+    public function widget( $args, $instance ) {
+        $title = ! empty( $instance['title'] ) ? $instance['title'] : 'در شبکه‌های اجتماعی همراه باشید';
+        $text  = ! empty( $instance['text'] ) ? $instance['text'] : 'محتوای رایگان، نکات آموزشی و اخبار دوره‌ها';
+        $networks = array( 'instagram', 'telegram', 'youtube', 'facebook' );
+        echo $args['before_widget'];
+        echo '<div class="mp-social-widget__content">';
+        echo '<b class="mp-social-widget__title">' . esc_html( $title ) . '</b>';
+        echo '<span class="mp-social-widget__text">' . esc_html( $text ) . '</span>';
+        echo '<div class="mp-social-icons" aria-label="شبکه‌های اجتماعی">';
+        foreach ( $networks as $network ) {
+            $url = ! empty( $instance[ $network ] ) ? $instance[ $network ] : '';
+            if ( ! $url ) { continue; }
+            echo '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr( ucfirst( $network ) ) . '" class="mp-social-icon mp-social-icon--' . esc_attr( $network ) . '">';
+            echo function_exists( 'matin_parto_social_icon' ) ? matin_parto_social_icon( $network ) : '';
+            echo '</a>';
+        }
+        echo '</div></div>';
+        echo $args['after_widget'];
+    }
+
+    public function form( $instance ) {
+        $title = isset( $instance['title'] ) ? $instance['title'] : 'در شبکه‌های اجتماعی همراه باشید';
+        $text  = isset( $instance['text'] ) ? $instance['text'] : 'محتوای رایگان، نکات آموزشی و اخبار دوره‌ها';
+        $labels = array( 'instagram' => 'اینستاگرام', 'telegram' => 'تلگرام', 'youtube' => 'یوتیوب', 'facebook' => 'فیسبوک' );
+        echo '<p><label for="' . esc_attr( $this->get_field_id( 'title' ) ) . '">عنوان</label><input class="widefat" id="' . esc_attr( $this->get_field_id( 'title' ) ) . '" name="' . esc_attr( $this->get_field_name( 'title' ) ) . '" type="text" value="' . esc_attr( $title ) . '"></p>';
+        echo '<p><label for="' . esc_attr( $this->get_field_id( 'text' ) ) . '">توضیح</label><textarea class="widefat" rows="3" id="' . esc_attr( $this->get_field_id( 'text' ) ) . '" name="' . esc_attr( $this->get_field_name( 'text' ) ) . '">' . esc_textarea( $text ) . '</textarea></p>';
+        foreach ( $labels as $key => $label ) {
+            $value = isset( $instance[ $key ] ) ? $instance[ $key ] : '';
+            echo '<p><label for="' . esc_attr( $this->get_field_id( $key ) ) . '">' . esc_html( $label ) . '</label><input class="widefat" id="' . esc_attr( $this->get_field_id( $key ) ) . '" name="' . esc_attr( $this->get_field_name( $key ) ) . '" type="url" placeholder="https://" value="' . esc_attr( $value ) . '"></p>';
+        }
+    }
+
+    public function update( $new_instance, $old_instance ) {
+        $instance = array();
+        $instance['title'] = sanitize_text_field( $new_instance['title'] ?? '' );
+        $instance['text'] = sanitize_text_field( $new_instance['text'] ?? '' );
+        foreach ( array( 'instagram', 'telegram', 'youtube', 'facebook' ) as $key ) {
+            $instance[ $key ] = esc_url_raw( $new_instance[ $key ] ?? '' );
+        }
+        return $instance;
+    }
+}
+
+function matin_parto_register_social_widget() {
+    register_widget( 'Matin_Parto_Social_Widget' );
+}
+add_action( 'widgets_init', 'matin_parto_register_social_widget' );
 
 function matin_parto_footer_settings_menu() {
     add_theme_page( 'تنظیمات فوتر', 'تنظیمات فوتر', 'manage_options', 'matin-parto-footer', 'matin_parto_footer_settings_page' );
