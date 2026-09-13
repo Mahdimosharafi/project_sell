@@ -14,12 +14,13 @@ add_filter( 'use_widgets_block_editor', '__return_false' );
 add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
 
 function matin_parto_enqueue_assets() {
-    wp_enqueue_style( 'matin-parto-style', get_stylesheet_uri(), array(), '2026.09.13' );
-    wp_enqueue_style( 'matin-parto-main', get_template_directory_uri() . '/assets/css/main.css', array( 'matin-parto-style' ), '2026.09.13' );
-    wp_enqueue_style( 'matin-parto-polish', get_template_directory_uri() . '/assets/css/header-footer-polish.css', array( 'matin-parto-main' ), '2026.09.13' );
-    wp_enqueue_style( 'matin-parto-home', get_template_directory_uri() . '/assets/css/home.css', array( 'matin-parto-polish' ), '2026.09.13' );
-    wp_enqueue_style( 'matin-parto-footer', get_template_directory_uri() . '/assets/css/footer-widgets.css', array( 'matin-parto-home' ), '2026.09.13' );
-    wp_enqueue_style( 'matin-parto-layout-fixes', get_template_directory_uri() . '/assets/css/layout-fixes.css', array( 'matin-parto-footer' ), '2026.09.13.1' );
+    wp_enqueue_style( 'matin-parto-style', get_stylesheet_uri(), array(), '2026.09.14' );
+    wp_enqueue_style( 'matin-parto-main', get_template_directory_uri() . '/assets/css/main.css', array( 'matin-parto-style' ), '2026.09.14' );
+    wp_enqueue_style( 'matin-parto-polish', get_template_directory_uri() . '/assets/css/header-footer-polish.css', array( 'matin-parto-main' ), '2026.09.14' );
+    wp_enqueue_style( 'matin-parto-home', get_template_directory_uri() . '/assets/css/home.css', array( 'matin-parto-polish' ), '2026.09.14' );
+    wp_enqueue_style( 'matin-parto-footer', get_template_directory_uri() . '/assets/css/footer-widgets.css', array( 'matin-parto-home' ), '2026.09.14' );
+    wp_enqueue_style( 'matin-parto-layout-fixes', get_template_directory_uri() . '/assets/css/layout-fixes.css', array( 'matin-parto-footer' ), '2026.09.14' );
+    wp_enqueue_style( 'matin-parto-cta-social', get_template_directory_uri() . '/assets/css/cta-social.css', array( 'matin-parto-layout-fixes' ), '2026.09.14' );
 
     $footer_hover_color = get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' );
     $footer_hover_color = sanitize_hex_color( $footer_hover_color );
@@ -28,7 +29,7 @@ function matin_parto_enqueue_assets() {
     }
     wp_add_inline_style( 'matin-parto-footer', ':root{--mp-footer-widget-hover:' . $footer_hover_color . ';}' );
 
-    wp_enqueue_script( 'matin-parto-main', get_template_directory_uri() . '/assets/js/main.js', array(), '2026.09.13', true );
+    wp_enqueue_script( 'matin-parto-main', get_template_directory_uri() . '/assets/js/main.js', array(), '2026.09.14', true );
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
 
@@ -48,7 +49,6 @@ function matin_parto_customize_register( $wp_customize ) {
     $wp_customize->add_setting( 'matin_parto_footer_terms_url', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );
     $wp_customize->add_control( 'matin_parto_footer_terms_url', array( 'label' => 'لینک قوانین و مقررات', 'section' => 'matin_parto_footer', 'type' => 'url' ) );
 
-    // رنگ هاور فهرست فوتر: کنترل رنگ واقعی در سفارشی‌سازی وردپرس.
     $wp_customize->add_setting( 'matin_parto_footer_hover_color', array(
         'default'           => '#7b2636',
         'sanitize_callback' => 'sanitize_hex_color',
