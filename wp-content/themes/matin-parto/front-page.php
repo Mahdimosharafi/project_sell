@@ -3,7 +3,10 @@ defined( 'ABSPATH' ) || exit;
 
 $home = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
 $hero_image = ! empty( $home['hero_image'] ) ? $home['hero_image'] : '';
-$cta_image  = ! empty( $home['cta_image'] ) ? $home['cta_image'] : '';
+$cta_image  = get_theme_mod( 'matin_parto_cta_image', '' );
+if ( ! $cta_image && ! empty( $home['cta_image'] ) ) {
+    $cta_image = $home['cta_image'];
+}
 $categories = array(
     array( 'آمادگی آزمون', 'Exam Preparation', '۲۲ درس' ),
     array( 'لغات و اصطلاحات', 'Vocabulary', '۱۸ درس' ),
@@ -26,12 +29,6 @@ $benefits = array(
     array( 'cap', 'سیستم آموزشی اصولی', 'مسیر یادگیری استاندارد و منظم' ),
     array( 'headset', 'پشتیبانی و همراهی', 'همراه شما در مسیر یادگیری' ),
     array( 'lock', 'دسترسی دائمی', 'یادگیری بدون محدودیت زمانی' ),
-);
-$socials = array(
-    'instagram' => ! empty( $home['social_instagram'] ) ? $home['social_instagram'] : '',
-    'telegram'  => ! empty( $home['social_telegram'] ) ? $home['social_telegram'] : '',
-    'youtube'   => ! empty( $home['social_youtube'] ) ? $home['social_youtube'] : '',
-    'facebook'  => ! empty( $home['social_facebook'] ) ? $home['social_facebook'] : '',
 );
 get_header();
 ?>
@@ -83,14 +80,11 @@ get_header();
 
     <section class="mp-home-cta mp-container">
         <div class="mp-home-cta__social">
-            <b>در شبکه‌های اجتماعی همراه باشید</b>
-            <span>محتوای رایگان، نکات آموزشی و اخبار دوره‌ها</span>
-            <?php if ( array_filter( $socials ) ) : ?>
-                <div class="mp-social-icons" aria-label="شبکه‌های اجتماعی">
-                    <?php foreach ( $socials as $network => $url ) : if ( ! $url ) { continue; } ?>
-                        <a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( ucfirst( $network ) ); ?>" class="mp-social-icon mp-social-icon--<?php echo esc_attr( $network ); ?>"><?php echo function_exists( 'matin_parto_social_icon' ) ? matin_parto_social_icon( $network ) : ''; ?></a>
-                    <?php endforeach; ?>
-                </div>
+            <?php if ( is_active_sidebar( 'matin-parto-social' ) ) : ?>
+                <?php dynamic_sidebar( 'matin-parto-social' ); ?>
+            <?php else : ?>
+                <b>در شبکه‌های اجتماعی همراه باشید</b>
+                <span>محتوای رایگان، نکات آموزشی و اخبار دوره‌ها</span>
             <?php endif; ?>
         </div>
 
