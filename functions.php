@@ -29,6 +29,7 @@ function matin_parto_enqueue_assets() {
         'matin-parto-polish'  => '/assets/css/header-footer-polish.css',
         'matin-parto-home'    => '/assets/css/home.css',
         'matin-parto-footer'  => '/assets/css/footer-widgets.css',
+        'matin-parto-rtl'     => '/rtl-fix.css',
     );
     $deps = array();
     foreach ( $files as $handle => $file ) {
