@@ -29,6 +29,7 @@ function matin_parto_enqueue_assets() {
         'matin-parto-footer'   => '/assets/css/footer-widgets.css',
         'matin-parto-rtl'      => '/rtl-fix.css',
         'matin-parto-final-ui' => '/assets/css/final-ui-fixes.css',
+        'matin-parto-cta-social' => '/assets/css/cta-social-fix.css',
     );
     $deps = array();
     foreach ( $files as $handle => $file ) {
@@ -39,7 +40,6 @@ function matin_parto_enqueue_assets() {
         }
     }
 
-    // Apply image selections from the WordPress Customizer to every homepage visual.
     $hero_image  = esc_url( get_theme_mod( 'matin_parto_hero_image', '' ) );
     $video_image = esc_url( get_theme_mod( 'matin_parto_video_image', '' ) );
     $course_image = esc_url( get_theme_mod( 'matin_parto_course_image', '' ) );
@@ -54,6 +54,7 @@ function matin_parto_enqueue_assets() {
     }
     if ( $cta_image ) {
         $custom_css .= '.mp-home-cta__person{background-image:url("' . $cta_image . '") !important;}';
+        $custom_css .= '.mp-footer-cta__image{content:url("' . $cta_image . '") !important;}';
     }
     if ( $backdrop ) {
         $custom_css .= '.mp-hero__visual:before{content:var(--mp-hero-backdrop-text);position:absolute;z-index:1;right:2%;top:4%;font-family:Georgia,serif;font-size:clamp(38px,6vw,82px);font-weight:700;letter-spacing:3px;line-height:.9;color:rgba(60,48,51,.055);white-space:pre-line;pointer-events:none;}';
@@ -85,14 +86,14 @@ function matin_parto_customize_register( $wp_customize ) {
     $wp_customize->add_section( 'matin_parto_home', array(
         'title'       => 'صفحه اصلی و تصاویر',
         'priority'    => 150,
-        'description' => 'تصاویر صفحه اصلی را از اینجا آپلود و متن‌های بخش معرفی را ویرایش کنید.',
+        'description' => 'تصاویر صفحه اصلی و بخش پایانی را از اینجا انتخاب کنید.',
     ) );
 
     $image_controls = array(
         'matin_parto_hero_image'   => array( 'تصویر اصلی هیرو (خانم)', 'تصویر خانم در بخش اصلی صفحه' ),
         'matin_parto_video_image'  => array( 'تصویر ویدئوها', 'تصویر پیش‌فرض کارت‌های ویدئو' ),
         'matin_parto_course_image' => array( 'تصویر دوره‌ها', 'تصویر پیش‌فرض کارت‌های دوره' ),
-        'matin_parto_cta_image'    => array( 'تصویر بخش پایانی', 'تصویر بخش دعوت به یادگیری در پایین صفحه' ),
+        'matin_parto_cta_image'    => array( 'تصویر وسط بخش پایانی', 'این تصویر در مرکز باکس همین امروز شروع کنید نمایش داده می‌شود.' ),
     );
     foreach ( $image_controls as $setting_id => $labels ) {
         $wp_customize->add_setting( $setting_id, array(
@@ -125,6 +126,27 @@ function matin_parto_customize_register( $wp_customize ) {
             'description' => $control[1],
             'section'     => 'matin_parto_home',
             'type'        => 'text',
+        ) );
+    }
+
+    /* Social links used by the bottom CTA. */
+    $social_controls = array(
+        'matin_parto_social_whatsapp'  => 'لینک واتساپ',
+        'matin_parto_social_telegram'  => 'لینک تلگرام',
+        'matin_parto_social_instagram' => 'لینک اینستاگرام',
+        'matin_parto_social_youtube'   => 'لینک یوتیوب',
+    );
+    foreach ( $social_controls as $setting_id => $label ) {
+        $wp_customize->add_setting( $setting_id, array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+            'transport'         => 'refresh',
+        ) );
+        $wp_customize->add_control( $setting_id, array(
+            'label'       => $label,
+            'description' => 'لینک کامل شبکه اجتماعی را وارد کنید.',
+            'section'     => 'matin_parto_home',
+            'type'        => 'url',
         ) );
     }
 
