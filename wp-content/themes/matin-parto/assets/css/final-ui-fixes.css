@@ -1,10 +1,11 @@
 /* Final directional layout fixes requested by the site owner. */
 
-/* Header: physical left-to-right order = login/register -> cart -> search. */
-.mp-header__actions{position:absolute!important;left:0!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;width:194px!important;height:40px!important;display:block!important;direction:ltr!important;margin:0!important;padding:0!important;}
-.mp-header__actions .mp-account{position:absolute!important;left:0!important;right:auto!important;top:0!important;width:auto!important;height:38px!important;min-height:38px!important;margin:0!important;order:initial!important;direction:rtl!important;}
-.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{position:absolute!important;left:112px!important;right:auto!important;top:0!important;width:38px!important;height:38px!important;margin:0!important;order:initial!important;}
-.mp-header__actions .mp-icon-button[aria-label="جستجو"]{position:absolute!important;left:156px!important;right:auto!important;top:0!important;width:38px!important;height:38px!important;margin:0!important;order:initial!important;}
+/* Header: force login/register to the far-left of the action group, followed by cart and search. */
+.mp-header__inner{position:relative!important;}
+.mp-header__actions{position:absolute!important;left:0!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;width:194px!important;height:40px!important;display:block!important;direction:ltr!important;margin:0!important;padding:0!important;z-index:999!important;}
+.mp-header__actions .mp-account{position:absolute!important;left:0!important;right:auto!important;top:0!important;width:auto!important;height:38px!important;min-height:38px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;order:0!important;direction:rtl!important;}
+.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{position:absolute!important;left:112px!important;right:auto!important;top:0!important;width:38px!important;height:38px!important;margin:0!important;order:0!important;}
+.mp-header__actions .mp-icon-button[aria-label="جستجو"]{position:absolute!important;left:156px!important;right:auto!important;top:0!important;width:38px!important;height:38px!important;margin:0!important;order:0!important;}
 
 /* Hero: Persian copy on the left, Matin Parto visual/badge on the right. */
 .mp-home .mp-hero__grid{direction:ltr!important;grid-template-columns:1fr .95fr!important;}
@@ -33,3 +34,8 @@
   .mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{left:98px!important;width:34px!important;height:34px!important;}
   .mp-header__actions .mp-icon-button[aria-label="جستجو"]{left:140px!important;width:34px!important;height:34px!important;}
 }
+
+/* Cache-safe final override: the account action is always the leftmost control. */
+html body .mp-header .mp-header__inner .mp-header__actions .mp-account{position:absolute!important;left:0!important;right:auto!important;}
+html body .mp-header .mp-header__inner .mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{position:absolute!important;left:112px!important;right:auto!important;}
+html body .mp-header .mp-header__inner .mp-header__actions .mp-icon-button[aria-label="جستجو"]{position:absolute!important;left:156px!important;right:auto!important;}
