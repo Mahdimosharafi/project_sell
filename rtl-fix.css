@@ -1,0 +1,94 @@
+/* Matin Parto - Global Persian RTL direction fix */
+html,
+body,
+.mp-site {
+    direction: rtl !important;
+}
+
+body,
+.mp-site {
+    text-align: right;
+}
+
+.mp-container,
+.mp-header__inner,
+.mp-nav,
+.mp-nav__list,
+.mp-header__actions {
+    direction: rtl !important;
+}
+
+.mp-nav__list {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Hero: text stays on the left, visual on the right */
+.mp-hero__grid {
+    direction: ltr !important;
+}
+.mp-hero__copy {
+    direction: rtl !important;
+    text-align: right !important;
+    order: 2 !important;
+}
+.mp-hero__visual {
+    direction: rtl !important;
+    order: 1 !important;
+}
+
+/* Benefits: permanent access right -> complete courses left */
+.mp-benefits {
+    direction: ltr !important;
+}
+.mp-benefit {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* Footer: About right, newsletter left */
+.mp-footer-main {
+    direction: ltr !important;
+}
+.mp-footer-column,
+.mp-footer-widget,
+.mp-footer-main .widget {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* Keep social icons in one horizontal row */
+.mp-social-widget,
+.mp-social-widget .mp-social-items {
+    direction: rtl !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Prevent theme-wide LTR rules from flipping Persian content */
+[dir="ltr"] .mp-site,
+[dir="ltr"] .mp-container {
+    direction: rtl !important;
+}
+
+@media (max-width: 768px) {
+    html,
+    body,
+    .mp-site {
+        direction: rtl !important;
+    }
+
+    .mp-hero__grid,
+    .mp-benefits,
+    .mp-footer-main {
+        direction: rtl !important;
+    }
+
+    .mp-hero__copy,
+    .mp-hero__visual {
+        order: initial !important;
+    }
+}
