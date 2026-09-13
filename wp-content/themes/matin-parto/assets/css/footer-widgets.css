@@ -1,7 +1,15 @@
 /* Footer widget styling — compact typography and site rose hover. */
-.mp-footer-main{direction:ltr;align-items:flex-start}
-.mp-footer-main > .mp-footer-column{direction:rtl;text-align:right;align-self:flex-start}
+.mp-footer-main{direction:ltr;align-items:start}
+.mp-footer-main > .mp-footer-column{direction:rtl;text-align:right;align-self:start;min-width:0}
 .mp-footer-main > .mp-footer-column > *{max-width:100%}
+
+/* Keep all footer columns and the newsletter on the exact same top baseline. */
+.mp-footer-main{display:grid;align-items:start!important}
+.mp-footer-main > .mp-footer-column{margin-top:0!important;padding-top:0!important}
+.mp-footer-main > .mp-footer-newsletter > h3,
+.mp-footer-main > .mp-footer-column .widget:first-child .widget-title,
+.mp-footer-main > .mp-footer-column > h3{margin-top:0!important;padding-top:0!important}
+.mp-footer-main > .mp-footer-newsletter p{margin-top:0!important}
 
 /* Keep the whole footer typography at 11px on desktop. */
 .mp-footer-column .widget,
@@ -25,39 +33,52 @@
 .mp-footer-column .widget ul{list-style:none;margin:0;padding:0}
 .mp-footer-column .widget li{margin:0 0 6px;padding:0}
 
-/* Footer menu/list links: cover classic menus and WordPress block/navigation lists. */
-.mp-footer-column .widget ul li a,
-.mp-footer-column .widget .wp-block-navigation-item__content,
-.mp-footer-column .widget .wp-block-navigation__container a,
-.mp-footer-column .widget nav a,
-.mp-footer-column.mp-footer-categories a,
-.mp-footer-column.mp-footer-quick-links a{
-  color:#746b6d !important;
-  transition:color .2s ease,opacity .2s ease !important;
-}
-.mp-footer-column .widget ul li a:hover,
-.mp-footer-column .widget ul li a:focus-visible,
-.mp-footer-column .widget .wp-block-navigation-item__content:hover,
-.mp-footer-column .widget .wp-block-navigation-item__content:focus-visible,
-.mp-footer-column .widget .wp-block-navigation__container a:hover,
-.mp-footer-column .widget .wp-block-navigation__container a:focus-visible,
-.mp-footer-column .widget nav a:hover,
-.mp-footer-column .widget nav a:focus-visible,
-.mp-footer-column.mp-footer-categories a:hover,
-.mp-footer-column.mp-footer-categories a:focus-visible,
-.mp-footer-column.mp-footer-quick-links a:hover,
-.mp-footer-column.mp-footer-quick-links a:focus-visible{
-  color:var(--mp-rose,#7b2636) !important;
-  opacity:1 !important;
-}
+/* Footer menu/list links: high-specificity hover override. */
+.mp-footer .mp-footer-column .widget ul li a,
+.mp-footer .mp-footer-column .widget ul li a span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a span,
+.mp-footer .mp-footer-column .widget nav a,
+.mp-footer .mp-footer-column .widget nav a span,
+.mp-footer .mp-footer-column.mp-footer-categories a,
+.mp-footer .mp-footer-column.mp-footer-quick-links a{color:#746b6d!important;transition:color .2s ease,opacity .2s ease!important}
 
-/* Also catch block widgets where the link color is stored on a nested span. */
-.mp-footer-column .widget a:hover span,
-.mp-footer-column .widget a:focus-visible span,
-.mp-footer-column .widget .wp-block-navigation-item__content:hover span,
-.mp-footer-column .widget .wp-block-navigation-item__content:focus-visible span{
-  color:var(--mp-rose,#7b2636) !important;
-}
+.mp-footer .mp-footer-column .widget ul li a:hover,
+.mp-footer .mp-footer-column .widget ul li a:focus,
+.mp-footer .mp-footer-column .widget ul li a:focus-visible,
+.mp-footer .mp-footer-column .widget ul li a:hover span,
+.mp-footer .mp-footer-column .widget ul li a:focus span,
+.mp-footer .mp-footer-column .widget ul li a:focus-visible span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content:hover,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content:focus,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content:focus-visible,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content:hover span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content:focus span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation-item__content:focus-visible span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a:hover,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a:focus,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a:focus-visible,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a:hover span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a:focus span,
+.mp-footer .mp-footer-column .widget .wp-block-navigation__container a:focus-visible span,
+.mp-footer .mp-footer-column .widget nav a:hover,
+.mp-footer .mp-footer-column .widget nav a:focus,
+.mp-footer .mp-footer-column .widget nav a:focus-visible,
+.mp-footer .mp-footer-column .widget nav a:hover span,
+.mp-footer .mp-footer-column .widget nav a:focus span,
+.mp-footer .mp-footer-column .widget nav a:focus-visible span,
+.mp-footer .mp-footer-column.mp-footer-categories a:hover,
+.mp-footer .mp-footer-column.mp-footer-categories a:focus,
+.mp-footer .mp-footer-column.mp-footer-categories a:focus-visible,
+.mp-footer .mp-footer-column.mp-footer-quick-links a:hover,
+.mp-footer .mp-footer-column.mp-footer-quick-links a:focus,
+.mp-footer .mp-footer-column.mp-footer-quick-links a:focus-visible{color:#7b2636!important;-webkit-text-fill-color:#7b2636!important;opacity:1!important}
+
+/* Catch nested spans/icons used by WordPress block menus. */
+.mp-footer .mp-footer-column a:hover *,
+.mp-footer .mp-footer-column a:focus-visible *{color:#7b2636!important;-webkit-text-fill-color:#7b2636!important}
 
 /* Newsletter text and controls. */
 .mp-footer-newsletter h3{line-height:1.7}
@@ -67,7 +88,7 @@
 .mp-newsletter button{font-size:11px}
 .mp-newsletter button:hover{background:var(--mp-rose,#7b2636)!important;color:#fff}
 
-/* One social widget contains all networks and displays them together. */
+/* Social widget. */
 .mp-social-widget{width:100%;margin-top:10px}
 .mp-social-widget__items{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:8px;direction:rtl}
 .mp-social-widget__link{width:30px!important;height:30px!important;margin:0!important;padding:0!important;border-radius:50%;display:grid!important;place-items:center;background:#eee8e6;color:#6f5d5f!important;text-decoration:none!important;transition:transform .2s ease,background .2s ease,color .2s ease}
@@ -75,16 +96,13 @@
 .mp-social-widget__icon{width:16px;height:16px;display:grid;place-items:center;color:currentColor}
 .mp-social-widget__icon svg{width:100%;height:100%;display:block}
 .mp-social-widget__icon-text{font-size:14px;line-height:1}
-
 .mp-social-widget-form .description{font-size:12px}
 .mp-social-widget-form label{display:block;margin-bottom:4px;font-size:12px}
 
 @media(max-width:820px){
   .mp-footer-column .widget-title{font-size:11px}
   .mp-footer-column .widget p,.mp-footer-column .widget a{font-size:11px}
-  .mp-footer-column h3,.mp-footer-column p,.mp-footer-column a,
-  .mp-footer-newsletter h3,.mp-footer-newsletter p,
-  .mp-newsletter input,.mp-newsletter input::placeholder,.mp-newsletter button{font-size:11px}
+  .mp-footer-column h3,.mp-footer-column p,.mp-footer-column a,.mp-footer-newsletter h3,.mp-footer-newsletter p,.mp-newsletter input,.mp-newsletter input::placeholder,.mp-newsletter button{font-size:11px}
 }
 @media(max-width:560px){
   .mp-footer-main{direction:ltr}
@@ -93,7 +111,5 @@
   .mp-social-widget__icon{width:14px;height:14px}
   .mp-footer-column .widget-title{font-size:11px}
   .mp-footer-column .widget p,.mp-footer-column .widget a{font-size:11px}
-  .mp-footer-column h3,.mp-footer-column p,.mp-footer-column a,
-  .mp-footer-newsletter h3,.mp-footer-newsletter p,
-  .mp-newsletter input,.mp-newsletter input::placeholder,.mp-newsletter button{font-size:11px}
+  .mp-footer-column h3,.mp-footer-column p,.mp-footer-column a,.mp-footer-newsletter h3,.mp-footer-newsletter p,.mp-newsletter input,.mp-newsletter input::placeholder,.mp-newsletter button{font-size:11px}
 }
