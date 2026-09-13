@@ -5,8 +5,8 @@
 .mp-footer .mp-footer-column .widget a:hover,
 .mp-footer .mp-footer-column .widget li a:hover,
 .mp-footer .mp-footer-column nav a:hover{
-  color:var(--mp-footer-widget-hover,#8f3048)!important;
-  -webkit-text-fill-color:var(--mp-footer-widget-hover,#8f3048)!important;
+  color:var(--mp-footer-widget-hover,#7b2636)!important;
+  -webkit-text-fill-color:var(--mp-footer-widget-hover,#7b2636)!important;
   opacity:1!important;
 }
 
