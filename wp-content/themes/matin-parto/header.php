@@ -37,16 +37,16 @@ defined( 'ABSPATH' ) || exit;
             </nav>
 
             <div class="mp-header__actions">
-                <a class="mp-account" href="<?php echo esc_url( wp_login_url() ); ?>">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 7a7 7 0 0 1 14 0"/></svg>
-                    <span>ورود / ثبت نام</span>
+                <a class="mp-icon-button" href="#" aria-label="جستجو">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.2"/><path d="m16 16 4.2 4.2"/></svg>
                 </a>
                 <a class="mp-icon-button" href="#" aria-label="سبد خرید">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Zm3 0a3 3 0 0 1 6 0"/></svg>
                     <span class="mp-badge">0</span>
                 </a>
-                <a class="mp-icon-button" href="#" aria-label="جستجو">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.2"/><path d="m16 16 4.2 4.2"/></svg>
+                <a class="mp-account" href="<?php echo esc_url( wp_login_url() ); ?>">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 7a7 7 0 0 1 14 0"/></svg>
+                    <span>ورود / ثبت نام</span>
                 </a>
             </div>
         </div>
