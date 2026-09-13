@@ -6,6 +6,13 @@ defined( 'ABSPATH' ) || exit;
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php wp_head(); ?>
+<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/assets/css/final-ui-fixes.css?v=20260913-3' ); ?>">
+<style>
+.mp-header__actions{left:0!important;right:auto!important;direction:rtl!important;display:flex!important;flex-direction:row!important;align-items:center!important;}
+.mp-header__actions .mp-account{order:1!important;}
+.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{order:2!important;}
+.mp-header__actions .mp-icon-button[aria-label="جستجو"]{order:3!important;}
+</style>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
