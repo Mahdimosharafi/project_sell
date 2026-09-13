@@ -4,6 +4,9 @@ $footer_copyright = get_theme_mod( 'matin_parto_footer_copyright', 'ماتین �
 $footer_note = get_theme_mod( 'matin_parto_footer_note', 'طراحی و توسعه با وردپرس' );
 $privacy_url = get_theme_mod( 'matin_parto_footer_privacy_url', '' );
 $terms_url = get_theme_mod( 'matin_parto_footer_terms_url', '' );
+$home_settings = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
+$footer_hover_color = ! empty( $home_settings['footer_hover_color'] ) ? sanitize_hex_color( $home_settings['footer_hover_color'] ) : '#8f3048';
+$footer_hover_color = $footer_hover_color ? $footer_hover_color : '#8f3048';
 ?>
 <style>
 /* Footer layout, scale and widget-menu hover */
@@ -24,7 +27,7 @@ $terms_url = get_theme_mod( 'matin_parto_footer_terms_url', '' );
 .mp-footer-column .wp-block-list a:hover,
 .mp-footer-column .wp-block-list a:focus-visible,
 .mp-footer-column .menu a:hover,
-.mp-footer-column .menu a:focus-visible{color:#8f3048!important}
+.mp-footer-column .menu a:focus-visible{color:<?php echo esc_attr( $footer_hover_color ); ?>!important}
 .mp-footer-column .widget ul li a:hover,
 .mp-footer-column .wp-block-list li a:hover{transform:translateX(-2px)!important}
 @media(max-width:820px){
