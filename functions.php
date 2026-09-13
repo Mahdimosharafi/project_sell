@@ -42,12 +42,6 @@ function matin_parto_enqueue_assets() {
     if ( file_exists( $js ) ) {
         wp_enqueue_script( 'matin-parto-main', $base_uri . '/assets/js/main.js', array(), (string) filemtime( $js ), true );
     }
-
-    $hover = sanitize_hex_color( get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' ) );
-    if ( ! $hover ) {
-        $hover = '#7b2636';
-    }
-    wp_add_inline_style( 'matin-parto-footer', ':root{--mp-footer-widget-hover:' . $hover . ';}' );
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
 
@@ -67,24 +61,12 @@ function matin_parto_customize_register( $wp_customize ) {
     $wp_customize->add_control( 'matin_parto_footer_privacy_url', array( 'label' => 'لینک حریم خصوصی', 'section' => 'matin_parto_footer', 'type' => 'url' ) );
     $wp_customize->add_setting( 'matin_parto_footer_terms_url', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );
     $wp_customize->add_control( 'matin_parto_footer_terms_url', array( 'label' => 'لینک قوانین و مقررات', 'section' => 'matin_parto_footer', 'type' => 'url' ) );
-
-    // Dedicated footer list hover color control.
-    $wp_customize->add_setting( 'matin_parto_footer_hover_color', array(
-        'default'           => '#7b2636',
-        'sanitize_callback' => 'sanitize_hex_color',
-        'transport'         => 'refresh',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'matin_parto_footer_hover_color', array(
-        'label'       => 'رنگ هاور فهرست فوتر',
-        'section'     => 'matin_parto_footer',
-        'priority'    => 50,
-        'description' => 'رنگ لینک‌های فهرست فوتر هنگام قرار گرفتن موس روی آن‌ها.',
-    ) ) );
 }
 add_action( 'customize_register', 'matin_parto_customize_register' );
 
 // The actual footer widget registration and social widget live in the working theme package.
 require_once get_template_directory() . '/wp-content/themes/matin-parto/inc/footer-widgets.php';
+require_once get_template_directory() . '/wp-content/themes/matin-parto/inc/footer-widget-controls.php';
 
 function matin_parto_fallback_menu() {
     echo '<ul class="mp-nav__list">';
