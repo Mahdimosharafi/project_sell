@@ -39,12 +39,12 @@ get_header();
                 <p><?php echo esc_html( $home['hero_text'] ?? 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ); ?></p>
                 <p class="mp-hero__subtext">با اعتماد به نفس انگلیسی صحبت کنید و در دنیای واقعی از آن استفاده کنید.</p>
                 <div class="mp-hero__buttons"><a class="mp-button mp-button--primary" href="#courses"><?php echo esc_html( $home['hero_primary'] ?? 'شروع یادگیری' ); ?></a><a class="mp-button mp-button--outline" href="#about">درباره من</a></div>
-                <div class="mp-students" aria-label="بیش از ده هزار زبان‌آموز"><span class="mp-avatars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>+10K</strong><span>زبان‌آموز موفق</span></div>
+                <div class="mp-students" aria-label="بیش از ده هزار زبان‌آموز"><span class="mp-avatars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong>+۱۰K</strong><span>زبان‌آموز موفق</span></div>
             </div>
             <div class="mp-hero__visual" aria-label="تصویر مدرس">
                 <div class="mp-hero__arch" aria-hidden="true"></div>
-                <?php if ( $hero_image ) : ?><img class="mp-hero__image" src="<?php echo esc_url( $hero_image ); ?>" alt="مدرس زبان انگلیسی" loading="eager" fetchpriority="high"><?php else : ?><div class="mp-hero__portrait" aria-hidden="true"><span>MATIN<br>PARTO</span></div><?php endif; ?>
-                <div class="mp-hero__badge"><b>7+</b><small>سال سابقه<br>آموزش</small></div>
+                <?php if ( $hero_image ) : ?><img class="mp-hero__image" src="<?php echo esc_url( $hero_image ); ?>" alt="مدرس زبان انگلیسی" loading="eager" fetchpriority="high"><?php else : ?><div class="mp-hero__portrait" aria-hidden="true"><span>ماتین<br>پرتو</span></div><?php endif; ?>
+                <div class="mp-hero__badge"><b>+۷</b><small>سال سابقه<br>آموزش</small></div>
             </div>
         </div>
     </section>
@@ -59,7 +59,7 @@ get_header();
     </div></div></section>
 
     <section class="mp-courses mp-section" id="courses"><div class="mp-container"><div class="mp-section-head"><a class="mp-circle-arrow" href="#courses" aria-label="حرکت بین دوره‌ها">‹</a><h2>دسته‌بندی دوره‌ها</h2></div><div class="mp-course-carousel">
-        <?php foreach ( $categories as $category ) : ?><article class="mp-course-card"><div class="mp-course-image <?php echo $hero_image ? 'has-image' : ''; ?>" <?php echo $hero_image ? 'style="background-image:url(' . esc_url( $hero_image ) . ')"' : ''; ?>><span><?php echo $hero_image ? '' : 'MATIN PARTO'; ?></span></div><div class="mp-course-info"><h3><?php echo esc_html( $category[0] ); ?></h3><b><?php echo esc_html( $category[1] ); ?></b><small><?php echo esc_html( $category[2] ); ?></small></div></article><?php endforeach; ?>
+        <?php foreach ( $categories as $category ) : ?><article class="mp-course-card"><div class="mp-course-image <?php echo $hero_image ? 'has-image' : ''; ?>" <?php echo $hero_image ? 'style="background-image:url(' . esc_url( $hero_image ) . ')"' : ''; ?>><span><?php echo $hero_image ? '' : 'ماتین پرتو'; ?></span></div><div class="mp-course-info"><h3><?php echo esc_html( $category[0] ); ?></h3><b><?php echo esc_html( $category[1] ); ?></b><small><?php echo esc_html( $category[2] ); ?></small></div></article><?php endforeach; ?>
     </div></div></section>
 
     <section class="mp-reviews mp-section" id="reviews"><div class="mp-container"><div class="mp-section-head"><a class="mp-more" href="#reviews">مشاهده همه نظرات</a><h2>نظرات زبان‌آموزان</h2></div><div class="mp-review-grid">
