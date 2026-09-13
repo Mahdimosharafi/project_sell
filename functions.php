@@ -29,7 +29,6 @@ function matin_parto_enqueue_assets() {
         'matin-parto-home'    => '/assets/css/home.css',
         'matin-parto-footer'  => '/assets/css/footer-widgets.css',
         'matin-parto-rtl'     => '/rtl-fix.css',
-        // This file contains the final physical header-action positioning.
         'matin-parto-final-ui' => '/assets/css/final-ui-fixes.css',
     );
     $deps = array();
@@ -47,8 +46,72 @@ function matin_parto_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
 
-/** Footer controls in Appearance > Customize. */
+/**
+ * Homepage settings used by the hero and content sections.
+ * Images are uploaded from Appearance > Customize and stored as theme mods.
+ */
+function matin_parto_home_settings() {
+    return array(
+        'hero_image'        => get_theme_mod( 'matin_parto_hero_image', '' ),
+        'video_image'       => get_theme_mod( 'matin_parto_video_image', '' ),
+        'course_image'      => get_theme_mod( 'matin_parto_course_image', '' ),
+        'cta_image'         => get_theme_mod( 'matin_parto_cta_image', '' ),
+        'hero_backdrop_text'=> get_theme_mod( 'matin_parto_hero_backdrop_text', 'MATIN PARTO' ),
+        'hero_title'        => get_theme_mod( 'matin_parto_hero_title', 'آموزش زبان انگلیسی' ),
+        'hero_subtitle'     => get_theme_mod( 'matin_parto_hero_subtitle', 'به صورت اصولی و قدم به قدم' ),
+        'hero_text'         => get_theme_mod( 'matin_parto_hero_text', 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ),
+        'hero_primary'      => get_theme_mod( 'matin_parto_hero_primary', 'شروع یادگیری' ),
+    );
+}
+
+/** Footer and homepage controls in Appearance > Customize. */
 function matin_parto_customize_register( $wp_customize ) {
+    $wp_customize->add_section( 'matin_parto_home', array(
+        'title'       => 'صفحه اصلی و تصاویر',
+        'priority'    => 150,
+        'description' => 'تصاویر صفحه اصلی را از اینجا آپلود و متن‌های بخش معرفی را ویرایش کنید.',
+    ) );
+
+    $image_controls = array(
+        'matin_parto_hero_image' => array( 'عنوان تصویر اصلی هیرو (خانم)', 'تصویر خانم در بخش اصلی صفحه' ),
+        'matin_parto_video_image' => array( 'تصویر ویدئوها', 'تصویر پیش‌فرض کارت‌های ویدئو' ),
+        'matin_parto_course_image' => array( 'تصویر دوره‌ها', 'تصویر پیش‌فرض کارت‌های دوره' ),
+        'matin_parto_cta_image' => array( 'تصویر بخش پایانی', 'تصویر بخش دعوت به یادگیری در پایین صفحه' ),
+    );
+    foreach ( $image_controls as $setting_id => $labels ) {
+        $wp_customize->add_setting( $setting_id, array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+            'transport'         => 'refresh',
+        ) );
+        $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting_id, array(
+            'label'       => $labels[0],
+            'description' => $labels[1],
+            'section'     => 'matin_parto_home',
+        ) ) );
+    }
+
+    $text_controls = array(
+        'matin_parto_hero_backdrop_text' => array( 'متن MATIN PARTO پشت تصویر', 'متنی که به‌صورت تزئینی پشت تصویر اصلی نمایش داده می‌شود.', 'MATIN PARTO' ),
+        'matin_parto_hero_title' => array( 'عنوان اصلی', '', 'آموزش زبان انگلیسی' ),
+        'matin_parto_hero_subtitle' => array( 'زیرعنوان اصلی', '', 'به صورت اصولی و قدم به قدم' ),
+        'matin_parto_hero_text' => array( 'متن معرفی', '', 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ),
+        'matin_parto_hero_primary' => array( 'متن دکمه اصلی', '', 'شروع یادگیری' ),
+    );
+    foreach ( $text_controls as $setting_id => $control ) {
+        $wp_customize->add_setting( $setting_id, array(
+            'default'           => $control[2],
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport'         => 'refresh',
+        ) );
+        $wp_customize->add_control( $setting_id, array(
+            'label'       => $control[0],
+            'description' => $control[1],
+            'section'     => 'matin_parto_home',
+            'type'        => 'text',
+        ) );
+    }
+
     $wp_customize->add_section( 'matin_parto_footer', array(
         'title'       => 'فوتر و پایین سایت',
         'priority'    => 160,
@@ -72,6 +135,6 @@ require_once get_template_directory() . '/wp-content/themes/matin-parto/inc/foot
 function matin_parto_fallback_menu() {
     echo '<ul class="mp-nav__list">';
     echo '<li class="is-current"><a href="' . esc_url( home_url( '/' ) ) . '">صفحه اصلی</a></li>';
-    echo '<li><a href="#courses">دوره‌های من</a></li><li><a href="#about">درباره‌ی من</a></li><li><a href="#videos">ویدئوهای آموزشی</a></li><li><a href="#blog">وبلاگ</a></li><li><a href="#contact">تماس با ما</a></li>';
+    echo '<li><a href="#courses">دوره ها</a></li><li><a href="#about">درباره من</a></li><li><a href="#videos">ویدیو های آموزشی</a></li><li><a href="#blog">وبلاگ</a></li><li><a href="#contact">تماس با ما</a></li>';
     echo '</ul>';
 }
