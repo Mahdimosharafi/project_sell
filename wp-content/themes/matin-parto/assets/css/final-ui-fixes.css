@@ -1,20 +1,20 @@
-/* Final header positioning fix: account must be the far-left header action. */
+/* Header action order: far-left = login/register, then search, then cart. */
 .mp-header__inner{position:relative!important;}
-.mp-header__actions{position:absolute!important;left:max(0px,calc((1180px - 100vw)/2 * -1))!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;width:194px!important;height:40px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;direction:ltr!important;z-index:100!important;visibility:visible!important;opacity:1!important;}
-.mp-header__actions .mp-account{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:1!important;display:inline-flex!important;visibility:visible!important;opacity:1!important;z-index:101!important;}
-.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:2!important;}
-.mp-header__actions .mp-icon-button[aria-label="جستجو"]{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:3!important;}
+.mp-header__actions{position:absolute!important;left:0!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;width:260px!important;height:42px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;direction:ltr!important;z-index:9999!important;visibility:visible!important;opacity:1!important;}
+.mp-header__actions .mp-account{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:1!important;display:inline-flex!important;visibility:visible!important;opacity:1!important;z-index:10000!important;direction:rtl!important;}
+.mp-header__actions .mp-icon-button[aria-label="جستجو"]{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:2!important;display:inline-flex!important;}
+.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:3!important;display:inline-flex!important;}
 
-/* Keep the same physical order on smaller screens. */
+/* Force the exact requested physical order regardless of RTL parent direction. */
+.mp-header__actions .mp-account{flex:0 0 auto!important;}
+.mp-header__actions .mp-icon-button[aria-label="جستجو"]{flex:0 0 38px!important;}
+.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{flex:0 0 38px!important;}
+
 @media(max-width:820px){
-  .mp-header__actions{left:0!important;right:auto!important;top:39px!important;transform:translateY(-50%)!important;width:194px!important;height:38px!important;}
-  .mp-header__actions .mp-account{order:1!important;}
-  .mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{order:2!important;}
-  .mp-header__actions .mp-icon-button[aria-label="جستجو"]{order:3!important;}
+  .mp-header__actions{left:0!important;right:auto!important;top:39px!important;transform:translateY(-50%)!important;width:260px!important;height:38px!important;}
 }
 @media(max-width:560px){
-  .mp-header__actions{left:0!important;right:auto!important;top:38px!important;width:178px!important;height:34px!important;}
-  .mp-header__actions .mp-account{order:1!important;min-height:34px!important;height:34px!important;}
-  .mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{order:2!important;width:34px!important;height:34px!important;}
-  .mp-header__actions .mp-icon-button[aria-label="جستجو"]{order:3!important;width:34px!important;height:34px!important;}
+  .mp-header__actions{left:0!important;right:auto!important;top:38px!important;width:238px!important;height:34px!important;gap:7px!important;}
+  .mp-header__actions .mp-icon-button[aria-label="جستجو"],.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{flex-basis:34px!important;width:34px!important;height:34px!important;}
+  .mp-header__actions .mp-account{height:34px!important;min-height:34px!important;}
 }
