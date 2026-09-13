@@ -5,7 +5,30 @@ $footer_copyright = get_theme_mod( 'matin_parto_footer_copyright', 'ماتین �
 $footer_note      = get_theme_mod( 'matin_parto_footer_note', 'طراحی و توسعه با وردپرس' );
 $privacy_url      = get_theme_mod( 'matin_parto_footer_privacy_url', '' );
 $terms_url        = get_theme_mod( 'matin_parto_footer_terms_url', '' );
+$footer_hover_color = sanitize_hex_color( get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' ) );
+if ( ! $footer_hover_color ) {
+    $footer_hover_color = '#7b2636';
+}
 ?>
+
+<style id="matin-parto-footer-hover-fix">
+/* Final footer hover: read the published Customizer color directly from PHP. */
+.mp-footer .mp-footer-column a:hover,
+.mp-footer .mp-footer-column a:focus-visible,
+.mp-footer .mp-footer-column li:hover > a,
+.mp-footer .mp-footer-column .menu-item:hover > a,
+.mp-footer .mp-footer-column .menu-item > a:hover,
+.mp-footer .mp-footer-column .wp-block-list li:hover > a,
+.mp-footer .mp-footer-column .wp-block-navigation-item:hover > a,
+.mp-footer .mp-footer-column .wp-block-navigation-item__content:hover,
+.mp-footer .mp-footer-column .wp-block-page-list-item__link:hover,
+.mp-footer .mp-footer-column nav a:hover,
+.mp-footer .mp-footer-column .widget a:hover {
+    color: <?php echo esc_attr( $footer_hover_color ); ?> !important;
+    -webkit-text-fill-color: <?php echo esc_attr( $footer_hover_color ); ?> !important;
+    opacity: 1 !important;
+}
+</style>
 
 <footer class="mp-footer" id="contact">
     <div class="mp-container">
