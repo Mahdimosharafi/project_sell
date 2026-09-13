@@ -5,9 +5,11 @@
 .mp-home-cta__person.has-image:after{display:none!important}
 .mp-home-cta__person img{display:block!important;width:250px!important;height:180px!important;object-fit:contain!important;object-position:center bottom!important;max-width:none!important;filter:none!important}
 .mp-home-cta__copy{grid-column:3!important;grid-row:1!important;direction:rtl!important;text-align:right!important}
-.mp-home-cta__social b{font-size:15px!important}
-.mp-home-cta__social span{font-size:9px!important}
-.mp-social-icons{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;margin-top:14px!important;direction:ltr!important}
+.mp-home-cta__social .mp-social-widget{width:100%!important}
+.mp-home-cta__social .mp-social-widget__content{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important}
+.mp-home-cta__social .mp-social-widget__title{font-size:15px!important;line-height:1.7!important;font-weight:700!important;color:#fff!important}
+.mp-home-cta__social .mp-social-widget__text{font-size:9px!important;line-height:1.9!important;color:#fff!important;opacity:.92!important}
+.mp-social-icons{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;margin-top:10px!important;direction:ltr!important}
 .mp-social-icon{width:30px!important;height:30px!important;border:1px solid rgba(255,255,255,.72)!important;border-radius:50%!important;display:grid!important;place-items:center!important;color:#fff!important;text-decoration:none!important;transition:transform .2s ease,background .2s ease,opacity .2s ease!important}
 .mp-social-icon:hover,.mp-social-icon:focus-visible{color:#fff!important;background:rgba(255,255,255,.15)!important;transform:translateY(-2px)!important;opacity:1!important}
 .mp-social-icon svg{width:15px!important;height:15px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important}
@@ -26,6 +28,7 @@
   .mp-home-cta__copy{grid-column:1!important;grid-row:1!important;text-align:center!important}
   .mp-home-cta__person{grid-column:1!important;grid-row:2!important;width:250px!important;height:180px!important}
   .mp-home-cta__social{grid-column:1!important;grid-row:3!important;text-align:center!important}
+  .mp-home-cta__social .mp-social-widget__content{align-items:center!important}
   .mp-social-icons{justify-content:center!important}
 }
 @media(max-width:520px){
