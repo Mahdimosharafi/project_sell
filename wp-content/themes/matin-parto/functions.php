@@ -79,6 +79,7 @@ function matin_parto_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'matin_parto_customize_register' );
 
 require_once get_template_directory() . '/inc/footer-widgets.php';
+require_once get_template_directory() . '/inc/footer-widget-controls.php';
 
 function matin_parto_fallback_menu() {
     echo '<ul class="mp-nav__list">';
