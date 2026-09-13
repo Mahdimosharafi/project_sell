@@ -7,7 +7,7 @@ function matin_parto_setup() {
     add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 180, 'flex-height' => true, 'flex-width' => true ) );
     add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
     remove_theme_support( 'widgets-block-editor' );
-    register_nav_menus( array( 'primary' => __( 'منوی اصلی', 'matin-parto' ), 'footer' => __( 'منوی فوتر', 'matin-parto' ) ) );
+    register_nav_menus( array( 'primary' => __( 'منوی اصلی', 'matin-parto' ), 'footer' => __( 'منوی فوتر', 'matin-parto' ) );
 }
 add_action( 'after_setup_theme', 'matin_parto_setup' );
 add_filter( 'use_widgets_block_editor', '__return_false' );
@@ -33,6 +33,8 @@ function matin_parto_customize_register( $wp_customize ) {
     $wp_customize->add_control( 'matin_parto_footer_privacy_url', array( 'label' => 'لینک حریم خصوصی', 'section' => 'matin_parto_footer', 'type' => 'url' ) );
     $wp_customize->add_setting( 'matin_parto_footer_terms_url', array( 'default' => '', 'sanitize_callback' => 'esc_url_raw' ) );
     $wp_customize->add_control( 'matin_parto_footer_terms_url', array( 'label' => 'لینک قوانین و مقررات', 'section' => 'matin_parto_footer', 'type' => 'url' ) );
+    $wp_customize->add_setting( 'matin_parto_footer_hover_color', array( 'default' => '#8f3048', 'sanitize_callback' => 'sanitize_hex_color' ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'matin_parto_footer_hover_color', array( 'label' => 'رنگ هاور فهرست فوتر', 'section' => 'matin_parto_footer', 'description' => 'رنگ لینک‌های فهرست فوتر هنگام قرار گرفتن موس روی آن‌ها.' ) ) );
 }
 add_action( 'customize_register', 'matin_parto_customize_register' );
 
