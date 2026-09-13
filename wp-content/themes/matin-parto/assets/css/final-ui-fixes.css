@@ -1,0 +1,41 @@
+/* Final directional layout fixes requested by the site owner. */
+
+/* Header: keep the account action at the absolute left edge of the action group. */
+.mp-header__actions{left:0!important;right:auto!important;direction:ltr!important;display:flex!important;align-items:center!important;}
+.mp-header__actions .mp-account{order:1!important;}
+.mp-header__actions .mp-icon-button{order:2!important;}
+.mp-header__actions .mp-icon-button:last-child{order:3!important;}
+
+/* Hero: Persian copy on the left, Matin Parto visual/badge on the right. */
+.mp-home .mp-hero__grid{direction:ltr!important;grid-template-columns:1fr .95fr!important;}
+.mp-home .mp-hero__copy{direction:rtl!important;text-align:right!important;grid-column:1!important;grid-row:1!important;padding:18px 0 24px 34px!important;}
+.mp-home .mp-hero__visual{direction:rtl!important;grid-column:2!important;grid-row:1!important;}
+.mp-home .mp-hero__copy .mp-kicker,
+.mp-home .mp-hero__copy h1,
+.mp-home .mp-hero__copy h2,
+.mp-home .mp-hero__copy p{direction:rtl!important;text-align:right!important;}
+.mp-home .mp-hero__buttons{direction:rtl!important;justify-content:flex-start!important;}
+.mp-home .mp-students{direction:rtl!important;justify-content:flex-start!important;}
+
+/* Make the hero copy explicitly Persian. */
+.mp-home .mp-hero__copy h1{font-family:"Vazirmatn","IRANSans",Tahoma,Arial,sans-serif!important;}
+.mp-home .mp-hero__copy h2{font-family:"Vazirmatn","IRANSans",Tahoma,Arial,sans-serif!important;}
+
+/* Reviews: heading stays on the right, "view all" stays on the left. */
+.mp-home .mp-reviews .mp-section-head{direction:ltr!important;display:flex!important;align-items:center!important;justify-content:space-between!important;}
+.mp-home .mp-reviews .mp-section-head h2{direction:rtl!important;text-align:right!important;order:2!important;margin-left:auto!important;}
+.mp-home .mp-reviews .mp-section-head .mp-more{direction:rtl!important;order:1!important;margin-right:auto!important;}
+
+/* Also keep the other section headers in their natural RTL visual order. */
+.mp-home .mp-section-head h2{direction:rtl!important;}
+
+@media(max-width:760px){
+  .mp-home .mp-hero__grid{direction:rtl!important;grid-template-columns:1fr!important;}
+  .mp-home .mp-hero__copy{grid-column:1!important;grid-row:1!important;padding:25px 0 0!important;text-align:center!important;}
+  .mp-home .mp-hero__copy .mp-kicker,
+  .mp-home .mp-hero__copy h1,
+  .mp-home .mp-hero__copy h2,
+  .mp-home .mp-hero__copy p{text-align:center!important;}
+  .mp-home .mp-hero__visual{grid-column:1!important;grid-row:2!important;}
+  .mp-home .mp-hero__buttons,.mp-home .mp-students{justify-content:center!important;}
+}
