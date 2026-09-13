@@ -18,17 +18,16 @@ add_action( 'after_setup_theme', 'matin_parto_setup' );
 add_filter( 'use_widgets_block_editor', '__return_true' );
 add_filter( 'gutenberg_use_widgets_block_editor', '__return_true' );
 
-/** Load the working theme assets kept in the repository package. */
 function matin_parto_enqueue_assets() {
     $base_dir = get_template_directory() . '/wp-content/themes/matin-parto';
     $base_uri = get_template_directory_uri() . '/wp-content/themes/matin-parto';
     $files = array(
-        'matin-parto-style'   => '/style.css',
-        'matin-parto-main'    => '/assets/css/main.css',
-        'matin-parto-polish'  => '/assets/css/header-footer-polish.css',
-        'matin-parto-home'    => '/assets/css/home.css',
-        'matin-parto-footer'  => '/assets/css/footer-widgets.css',
-        'matin-parto-rtl'     => '/rtl-fix.css',
+        'matin-parto-style'    => '/style.css',
+        'matin-parto-main'     => '/assets/css/main.css',
+        'matin-parto-polish'   => '/assets/css/header-footer-polish.css',
+        'matin-parto-home'     => '/assets/css/home.css',
+        'matin-parto-footer'   => '/assets/css/footer-widgets.css',
+        'matin-parto-rtl'      => '/rtl-fix.css',
         'matin-parto-final-ui' => '/assets/css/final-ui-fixes.css',
     );
     $deps = array();
@@ -39,6 +38,28 @@ function matin_parto_enqueue_assets() {
             $deps = array( $handle );
         }
     }
+
+    // Apply image selections from the WordPress Customizer to every homepage visual.
+    $hero_image  = esc_url( get_theme_mod( 'matin_parto_hero_image', '' ) );
+    $video_image = esc_url( get_theme_mod( 'matin_parto_video_image', '' ) );
+    $course_image = esc_url( get_theme_mod( 'matin_parto_course_image', '' ) );
+    $cta_image   = esc_url( get_theme_mod( 'matin_parto_cta_image', '' ) );
+    $backdrop    = esc_html( get_theme_mod( 'matin_parto_hero_backdrop_text', 'MATIN PARTO' ) );
+    $custom_css  = ':root{--mp-hero-backdrop-text:"' . esc_attr( $backdrop ) . '";}';
+    if ( $video_image ) {
+        $custom_css .= '.mp-video-thumb,.mp-video-mini{background-image:url("' . $video_image . '") !important;}';
+    }
+    if ( $course_image ) {
+        $custom_css .= '.mp-course-image{background-image:url("' . $course_image . '") !important;}';
+    }
+    if ( $cta_image ) {
+        $custom_css .= '.mp-home-cta__person{background-image:url("' . $cta_image . '") !important;}';
+    }
+    if ( $backdrop ) {
+        $custom_css .= '.mp-hero__visual:before{content:var(--mp-hero-backdrop-text);position:absolute;z-index:1;right:2%;top:4%;font-family:Georgia,serif;font-size:clamp(38px,6vw,82px);font-weight:700;letter-spacing:3px;line-height:.9;color:rgba(60,48,51,.055);white-space:pre-line;pointer-events:none;}';
+    }
+    wp_add_inline_style( 'matin-parto-home', $custom_css );
+
     $js = $base_dir . '/assets/js/main.js';
     if ( file_exists( $js ) ) {
         wp_enqueue_script( 'matin-parto-main', $base_uri . '/assets/js/main.js', array(), (string) filemtime( $js ), true );
@@ -46,25 +67,20 @@ function matin_parto_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_enqueue_assets' );
 
-/**
- * Homepage settings used by the hero and content sections.
- * Images are uploaded from Appearance > Customize and stored as theme mods.
- */
 function matin_parto_home_settings() {
     return array(
-        'hero_image'        => get_theme_mod( 'matin_parto_hero_image', '' ),
-        'video_image'       => get_theme_mod( 'matin_parto_video_image', '' ),
-        'course_image'      => get_theme_mod( 'matin_parto_course_image', '' ),
-        'cta_image'         => get_theme_mod( 'matin_parto_cta_image', '' ),
-        'hero_backdrop_text'=> get_theme_mod( 'matin_parto_hero_backdrop_text', 'MATIN PARTO' ),
-        'hero_title'        => get_theme_mod( 'matin_parto_hero_title', 'آموزش زبان انگلیسی' ),
-        'hero_subtitle'     => get_theme_mod( 'matin_parto_hero_subtitle', 'به صورت اصولی و قدم به قدم' ),
-        'hero_text'         => get_theme_mod( 'matin_parto_hero_text', 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ),
-        'hero_primary'      => get_theme_mod( 'matin_parto_hero_primary', 'شروع یادگیری' ),
+        'hero_image'         => get_theme_mod( 'matin_parto_hero_image', '' ),
+        'video_image'        => get_theme_mod( 'matin_parto_video_image', '' ),
+        'course_image'       => get_theme_mod( 'matin_parto_course_image', '' ),
+        'cta_image'          => get_theme_mod( 'matin_parto_cta_image', '' ),
+        'hero_backdrop_text' => get_theme_mod( 'matin_parto_hero_backdrop_text', 'MATIN PARTO' ),
+        'hero_title'         => get_theme_mod( 'matin_parto_hero_title', 'آموزش زبان انگلیسی' ),
+        'hero_subtitle'      => get_theme_mod( 'matin_parto_hero_subtitle', 'به صورت اصولی و قدم به قدم' ),
+        'hero_text'          => get_theme_mod( 'matin_parto_hero_text', 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ),
+        'hero_primary'       => get_theme_mod( 'matin_parto_hero_primary', 'شروع یادگیری' ),
     );
 }
 
-/** Footer and homepage controls in Appearance > Customize. */
 function matin_parto_customize_register( $wp_customize ) {
     $wp_customize->add_section( 'matin_parto_home', array(
         'title'       => 'صفحه اصلی و تصاویر',
@@ -73,10 +89,10 @@ function matin_parto_customize_register( $wp_customize ) {
     ) );
 
     $image_controls = array(
-        'matin_parto_hero_image' => array( 'عنوان تصویر اصلی هیرو (خانم)', 'تصویر خانم در بخش اصلی صفحه' ),
-        'matin_parto_video_image' => array( 'تصویر ویدئوها', 'تصویر پیش‌فرض کارت‌های ویدئو' ),
+        'matin_parto_hero_image'   => array( 'تصویر اصلی هیرو (خانم)', 'تصویر خانم در بخش اصلی صفحه' ),
+        'matin_parto_video_image'  => array( 'تصویر ویدئوها', 'تصویر پیش‌فرض کارت‌های ویدئو' ),
         'matin_parto_course_image' => array( 'تصویر دوره‌ها', 'تصویر پیش‌فرض کارت‌های دوره' ),
-        'matin_parto_cta_image' => array( 'تصویر بخش پایانی', 'تصویر بخش دعوت به یادگیری در پایین صفحه' ),
+        'matin_parto_cta_image'    => array( 'تصویر بخش پایانی', 'تصویر بخش دعوت به یادگیری در پایین صفحه' ),
     );
     foreach ( $image_controls as $setting_id => $labels ) {
         $wp_customize->add_setting( $setting_id, array(
@@ -92,11 +108,11 @@ function matin_parto_customize_register( $wp_customize ) {
     }
 
     $text_controls = array(
-        'matin_parto_hero_backdrop_text' => array( 'متن MATIN PARTO پشت تصویر', 'متنی که به‌صورت تزئینی پشت تصویر اصلی نمایش داده می‌شود.', 'MATIN PARTO' ),
-        'matin_parto_hero_title' => array( 'عنوان اصلی', '', 'آموزش زبان انگلیسی' ),
-        'matin_parto_hero_subtitle' => array( 'زیرعنوان اصلی', '', 'به صورت اصولی و قدم به قدم' ),
-        'matin_parto_hero_text' => array( 'متن معرفی', '', 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ),
-        'matin_parto_hero_primary' => array( 'متن دکمه اصلی', '', 'شروع یادگیری' ),
+        'matin_parto_hero_backdrop_text' => array( 'متن MATIN PARTO پشت تصویر', 'متن تزئینی پشت تصویر اصلی.', 'MATIN PARTO' ),
+        'matin_parto_hero_title'         => array( 'عنوان اصلی', '', 'آموزش زبان انگلیسی' ),
+        'matin_parto_hero_subtitle'      => array( 'زیرعنوان اصلی', '', 'به صورت اصولی و قدم به قدم' ),
+        'matin_parto_hero_text'          => array( 'متن معرفی', '', 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته.' ),
+        'matin_parto_hero_primary'       => array( 'متن دکمه اصلی', '', 'شروع یادگیری' ),
     );
     foreach ( $text_controls as $setting_id => $control ) {
         $wp_customize->add_setting( $setting_id, array(
