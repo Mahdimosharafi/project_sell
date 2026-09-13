@@ -1,10 +1,22 @@
 /* Footer list hover */
 .mp-footer .mp-footer-column a:hover,
 .mp-footer .mp-footer-column a:focus,
+.mp-footer .mp-footer-column a:focus-visible,
 .mp-footer .mp-footer-column li:hover > a,
 .mp-footer .mp-footer-column .widget a:hover,
+.mp-footer .mp-footer-column .widget a:focus,
+.mp-footer .mp-footer-column .widget a:focus-visible,
+.mp-footer .mp-footer-column .widget li:hover > a,
 .mp-footer .mp-footer-column .widget li a:hover,
-.mp-footer .mp-footer-column nav a:hover{
+.mp-footer .mp-footer-column nav a:hover,
+.mp-footer .mp-footer-column nav a:focus-visible,
+.mp-footer .mp-footer-column .menu-item:hover > a,
+.mp-footer .mp-footer-column .menu-item > a:hover,
+.mp-footer .mp-footer-column .wp-block-navigation-item:hover > a,
+.mp-footer .mp-footer-column .wp-block-navigation-item__content:hover,
+.mp-footer .mp-footer-column .wp-block-page-list-item__link:hover,
+.mp-footer .mp-footer-column .wp-block-navigation__container a:hover,
+.mp-footer .mp-footer-column .wp-block-navigation__responsive-container a:hover {
   color:var(--mp-footer-widget-hover,#7b2636)!important;
   -webkit-text-fill-color:var(--mp-footer-widget-hover,#7b2636)!important;
   opacity:1!important;
