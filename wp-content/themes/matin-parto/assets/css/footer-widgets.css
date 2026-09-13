@@ -5,8 +5,8 @@
 .mp-footer .mp-footer-column .widget a:hover,
 .mp-footer .mp-footer-column .widget li a:hover,
 .mp-footer .mp-footer-column nav a:hover{
-  color:#7b2636!important;
-  -webkit-text-fill-color:#7b2636!important;
+  color:var(--mp-footer-widget-hover,#8f3048)!important;
+  -webkit-text-fill-color:var(--mp-footer-widget-hover,#8f3048)!important;
   opacity:1!important;
 }
 
@@ -16,6 +16,10 @@
 .mp-footer-column .widget li{margin:0 0 6px;padding:0}
 .mp-footer-column .widget-title{line-height:1.7}
 .mp-footer-column .widget p,.mp-footer-column .widget a{color:#746b6d;line-height:1.9}
+
+/* Footer widget settings: alignment + font size */
+.mp-footer-column .widget{font-size:var(--mp-footer-widget-font-size,11px);text-align:var(--mp-footer-widget-align,right)}
+.mp-footer-column .widget ul,.mp-footer-column .widget nav{ text-align:inherit }
 
 .mp-social-widget{width:100%;margin-top:10px}
 .mp-social-widget__items{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:8px;direction:rtl}
