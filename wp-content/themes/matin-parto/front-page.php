@@ -32,13 +32,11 @@ get_header();
 <main class="mp-home">
     <section class="mp-hero" id="about">
         <div class="mp-container mp-hero__grid">
-            <!-- Visual intentionally comes first so RTL layout keeps it on the right. -->
             <div class="mp-hero__visual" aria-label="معرفی ماتین پرتو و سابقه آموزش">
                 <div class="mp-hero__arch" aria-hidden="true"></div>
                 <?php if ( $hero_image ) : ?><img class="mp-hero__image" src="<?php echo esc_url( $hero_image ); ?>" alt="ماتین پرتو - آموزش زبان انگلیسی" loading="eager" fetchpriority="high"><?php else : ?><div class="mp-hero__portrait" aria-hidden="true"><span>ماتین<br>پرتو</span></div><?php endif; ?>
                 <div class="mp-hero__badge"><b>+۷</b><small>سال سابقه<br>آموزش</small></div>
             </div>
-            <!-- Copy intentionally comes second so RTL layout keeps it on the left. -->
             <div class="mp-hero__copy">
                 <span class="mp-kicker">آموزش زبان انگلیسی</span>
                 <h1><?php echo esc_html( $home['hero_title'] ?? 'آموزش زبان انگلیسی' ); ?></h1>
@@ -52,7 +50,16 @@ get_header();
     </section>
 
     <section class="mp-benefits mp-container" aria-label="مزیت‌های آموزش">
-        <?php foreach ( $benefits as $benefit ) : ?><div class="mp-benefit"><span class="mp-benefit__icon mp-icon--<?php echo esc_attr( $benefit[0] ); ?>" aria-hidden="true"></span><div><b><?php echo esc_html( $benefit[1] ); ?></b><small><?php echo esc_html( $benefit[2] ); ?></small></div></div><?php endforeach; ?>
+        <?php foreach ( $benefits as $benefit ) : ?>
+            <div class="mp-benefit">
+                <span class="mp-benefit__icon mp-icon--<?php echo esc_attr( $benefit[0] ); ?>" aria-hidden="true">
+                    <?php if ( 'cap' === $benefit[0] ) : ?>
+                        <svg viewBox="0 0 32 32" focusable="false"><path d="M3 10.5 16 4l13 6.5L16 17 3 10.5Z"/><path d="M8 14v5.5c4.8 3.1 11.2 3.1 16 0V14"/><path d="M29 11v8"/></svg>
+                    <?php endif; ?>
+                </span>
+                <div><b><?php echo esc_html( $benefit[1] ); ?></b><small><?php echo esc_html( $benefit[2] ); ?></small></div>
+            </div>
+        <?php endforeach; ?>
     </section>
 
     <section class="mp-video-section mp-section" id="videos"><div class="mp-container"><div class="mp-section-head"><a class="mp-more" href="#videos">مشاهده همه ویدئوها</a><h2>جدیدترین ویدئوهای آموزشی</h2></div><div class="mp-video-grid">
