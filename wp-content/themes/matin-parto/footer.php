@@ -19,7 +19,7 @@ $footer_hover_color = $footer_hover_color ? $footer_hover_color : '#8f3048';
 .mp-footer-column a,
 .mp-footer-column .widget a,
 .mp-footer-column .wp-block-list a,
-.mp-footer-column .menu a{color:#746b6d!important;transition:color .2s ease,transform .2s ease!important}
+.mp-footer-column .menu a{color:#746b6d!important;-webkit-text-fill-color:#746b6d!important;transition:color .2s ease,transform .2s ease!important}
 .mp-footer-column a:hover,
 .mp-footer-column a:focus-visible,
 .mp-footer-column .widget a:hover,
@@ -27,7 +27,7 @@ $footer_hover_color = $footer_hover_color ? $footer_hover_color : '#8f3048';
 .mp-footer-column .wp-block-list a:hover,
 .mp-footer-column .wp-block-list a:focus-visible,
 .mp-footer-column .menu a:hover,
-.mp-footer-column .menu a:focus-visible{color:<?php echo esc_attr( $footer_hover_color ); ?>!important}
+.mp-footer-column .menu a:focus-visible{color:<?php echo esc_attr( $footer_hover_color ); ?>!important;-webkit-text-fill-color:<?php echo esc_attr( $footer_hover_color ); ?>!important}
 .mp-footer-column .widget ul li a:hover,
 .mp-footer-column .wp-block-list li a:hover{transform:translateX(-2px)!important}
 @media(max-width:820px){
