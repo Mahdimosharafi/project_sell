@@ -5,10 +5,12 @@
 .mp-header__actions .mp-icon-button[aria-label="جستجو"]{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:2!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;line-height:0!important;padding:0!important;}
 .mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{position:relative!important;left:auto!important;right:auto!important;top:auto!important;order:3!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;line-height:0!important;padding:0!important;}
 
-/* Keep every icon mathematically centered inside its square. */
-.mp-header__actions .mp-icon-button svg{display:block!important;width:20px!important;height:20px!important;min-width:20px!important;min-height:20px!important;margin:0!important;position:static!important;transform:none!important;}
-.mp-header__actions .mp-account svg{display:block!important;width:20px!important;height:20px!important;margin:0!important;position:static!important;transform:none!important;}
+/* Keep every icon centered inside its square, including visual SVG bounds. */
 .mp-header__actions .mp-icon-button{box-sizing:border-box!important;}
+.mp-header__actions .mp-icon-button svg{display:block!important;width:20px!important;height:20px!important;min-width:20px!important;min-height:20px!important;margin:0!important;position:relative!important;left:0!important;top:0!important;}
+.mp-header__actions .mp-icon-button[aria-label="جستجو"] svg{transform:translate(-1px,-.5px)!important;}
+.mp-header__actions .mp-icon-button[aria-label="سبد خرید"] svg{transform:translate(0,-.5px)!important;}
+.mp-header__actions .mp-account svg{display:block!important;width:20px!important;height:20px!important;margin:0!important;position:static!important;transform:none!important;}
 .mp-header__actions .mp-icon-button .mp-badge{position:absolute!important;top:-5px!important;right:-4px!important;margin:0!important;line-height:1!important;display:flex!important;align-items:center!important;justify-content:center!important;}
 
 /* Force the exact requested physical order regardless of RTL parent direction. */
