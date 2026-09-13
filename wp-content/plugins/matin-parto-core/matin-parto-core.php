@@ -2,19 +2,20 @@
 /**
  * Plugin Name: Matin Parto Core
  * Description: Core settings and editable homepage content for the Matin Parto English Academy site.
- * Version: 0.1.1
+ * Version: 0.1.2
  */
 defined( 'ABSPATH' ) || exit;
 
 function matin_parto_home_defaults() {
     return array(
-        'hero_title'     => 'آموزش زبان انگلیسی',
-        'hero_subtitle'  => 'به صورت اصولی و قدم به قدم',
-        'hero_text'      => 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته، با اعتماد به نفس انگلیسی صحبت کنید و در دنیای واقعی از آن استفاده کنید.',
-        'hero_primary'   => 'شروع یادگیری',
-        'hero_secondary' => 'درباره من',
-        'hero_image'     => '',
-        'cta_image'      => '',
+        'hero_title'        => 'آموزش زبان انگلیسی',
+        'hero_subtitle'     => 'به صورت اصولی و قدم به قدم',
+        'hero_text'         => 'با یک سیستم ساده و کاربردی از پایه تا پیشرفته، با اعتماد به نفس انگلیسی صحبت کنید و در دنیای واقعی از آن استفاده کنید.',
+        'hero_primary'      => 'شروع یادگیری',
+        'hero_secondary'    => 'درباره من',
+        'hero_image'        => '',
+        'cta_image'         => '',
+        'footer_hover_color'=> '#8f3048',
     );
 }
 
@@ -34,9 +35,13 @@ function matin_parto_core_sanitize( $input ) {
     foreach ( $defaults as $key => $default ) {
         $output[ $key ] = isset( $input[ $key ] ) ? sanitize_text_field( $input[ $key ] ) : $default;
     }
-    $output['hero_text']  = isset( $input['hero_text'] ) ? sanitize_textarea_field( $input['hero_text'] ) : $defaults['hero_text'];
+    $output['hero_text'] = isset( $input['hero_text'] ) ? sanitize_textarea_field( $input['hero_text'] ) : $defaults['hero_text'];
     $output['hero_image'] = isset( $input['hero_image'] ) ? esc_url_raw( $input['hero_image'] ) : '';
-    $output['cta_image']  = isset( $input['cta_image'] ) ? esc_url_raw( $input['cta_image'] ) : '';
+    $output['cta_image'] = isset( $input['cta_image'] ) ? esc_url_raw( $input['cta_image'] ) : '';
+    $output['footer_hover_color'] = isset( $input['footer_hover_color'] ) ? sanitize_hex_color( $input['footer_hover_color'] ) : $defaults['footer_hover_color'];
+    if ( ! $output['footer_hover_color'] ) {
+        $output['footer_hover_color'] = $defaults['footer_hover_color'];
+    }
     return $output;
 }
 
@@ -66,6 +71,7 @@ function matin_parto_core_page() {
                     'hero_secondary' => array( 'متن دکمه دوم', 'text' ),
                     'hero_image' => array( 'تصویر Hero', 'media' ),
                     'cta_image' => array( 'تصویر CTA', 'media' ),
+                    'footer_hover_color' => array( 'رنگ هاور فهرست فوتر', 'color' ),
                 );
                 foreach ( $fields as $key => $field ) : ?>
                     <tr><th scope="row"><label for="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field[0] ); ?></label></th><td>
@@ -74,6 +80,10 @@ function matin_parto_core_page() {
                     <?php elseif ( 'media' === $field[1] ) : ?>
                         <div class="mp-core-media-field"><input class="regular-text mp-core-media-url" type="url" id="<?php echo esc_attr( $key ); ?>" name="matin_parto_home[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $home[ $key ] ); ?>"><button type="button" class="button mp-core-media-button" data-target="<?php echo esc_attr( $key ); ?>">انتخاب از رسانه</button><button type="button" class="button-link-delete mp-core-media-clear" data-target="<?php echo esc_attr( $key ); ?>">پاک کردن</button></div>
                         <p class="description">تصویر ترجیحاً عمودی و با کیفیت مناسب باشد.</p>
+                    <?php elseif ( 'color' === $field[1] ) : ?>
+                        <input type="color" id="<?php echo esc_attr( $key ); ?>" name="matin_parto_home[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $home[ $key ] ); ?>">
+                        <input class="regular-text" type="text" value="<?php echo esc_attr( $home[ $key ] ); ?>" readonly aria-label="کد رنگ هاور">
+                        <p class="description">رنگی که هنگام قرار گرفتن موس روی لینک‌های فهرست فوتر نمایش داده می‌شود.</p>
                     <?php else : ?>
                         <input class="regular-text" type="<?php echo esc_attr( $field[1] ); ?>" id="<?php echo esc_attr( $key ); ?>" name="matin_parto_home[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $home[ $key ] ); ?>">
                     <?php endif; ?>
@@ -92,6 +102,7 @@ function matin_parto_core_page() {
             frame.open();
         });
         $(document).on('click','.mp-core-media-clear',function(e){e.preventDefault();$('#'+$(this).data('target')).val('');});
+        $('#footer_hover_color').on('input change',function(){ $(this).next('input[type="text"]').val($(this).val()); });
     });
     </script>
     <?php
