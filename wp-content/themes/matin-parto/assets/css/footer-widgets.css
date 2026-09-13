@@ -1,20 +1,48 @@
-/* Only the selected footer sections are widget-editable. */
+/* Footer widget styling — compact typography and site rose hover. */
 .mp-footer-main{direction:ltr}
 .mp-footer-main > .mp-footer-column{direction:rtl;text-align:right}
+
+/* Keep the whole footer typography at 11px on desktop. */
+.mp-footer-column .widget,
+.mp-footer-column .widget-title,
+.mp-footer-column .widget p,
+.mp-footer-column .widget a,
+.mp-footer-column .widget li,
+.mp-footer-column h3,
+.mp-footer-column p,
+.mp-footer-column a,
+.mp-footer-newsletter h3,
+.mp-footer-newsletter p,
+.mp-newsletter input,
+.mp-newsletter input::placeholder,
+.mp-newsletter button{font-size:11px}
+
 .mp-footer-column .widget{width:100%;margin:0 0 12px}
 .mp-footer-column .widget:last-child{margin-bottom:0}
-.mp-footer-column .widget-title{margin:0 0 11px;color:#373032;font-size:14px;font-weight:700;line-height:1.7}
-.mp-footer-column .widget p,.mp-footer-column .widget a{color:#746b6d;font-size:11px;line-height:1.9}
+.mp-footer-column .widget-title{margin:0 0 11px;color:#373032;font-weight:700;line-height:1.7}
+.mp-footer-column .widget p,.mp-footer-column .widget a{color:#746b6d;line-height:1.9}
 .mp-footer-column .widget ul{list-style:none;margin:0;padding:0}
 .mp-footer-column .widget li{margin:0 0 6px;padding:0}
-.mp-footer-column .widget a{transition:color .2s ease}
-.mp-footer-column .widget a:hover{color:var(--mp-rose)}
+
+/* All footer links use the same burgundy hover as the site. */
+.mp-footer-column a,
+.mp-footer-bottom a{transition:color .2s ease}
+.mp-footer-column a:hover,
+.mp-footer-bottom a:hover{color:var(--mp-rose)!important}
+
+/* Newsletter text and controls. */
+.mp-footer-newsletter h3{line-height:1.7}
+.mp-footer-newsletter p{line-height:1.9}
+.mp-newsletter input{font-size:11px}
+.mp-newsletter input::placeholder{font-size:11px}
+.mp-newsletter button{font-size:11px}
+.mp-newsletter button:hover{background:var(--mp-rose)!important;color:#fff}
 
 /* One social widget contains all networks and displays them together. */
 .mp-social-widget{width:100%;margin-top:10px}
 .mp-social-widget__items{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:8px;direction:rtl}
 .mp-social-widget__link{width:30px!important;height:30px!important;margin:0!important;padding:0!important;border-radius:50%;display:grid!important;place-items:center;background:#eee8e6;color:#6f5d5f!important;text-decoration:none!important;transition:transform .2s ease,background .2s ease,color .2s ease}
-.mp-social-widget__link:hover{background:#a58e8f;color:#fff!important;transform:translateY(-2px)}
+.mp-social-widget__link:hover{background:var(--mp-rose)!important;color:#fff!important;transform:translateY(-2px)}
 .mp-social-widget__icon-image{width:16px;height:16px;object-fit:contain;border-radius:3px;display:block}
 .mp-social-widget__icon-text{font-size:14px;line-height:1}
 
@@ -22,12 +50,20 @@
 .mp-social-widget-form label{display:block;margin-bottom:4px;font-size:12px}
 
 @media(max-width:820px){
-  .mp-footer-column .widget-title{font-size:13px}
+  .mp-footer-column .widget-title{font-size:11px}
   .mp-footer-column .widget p,.mp-footer-column .widget a{font-size:11px}
+  .mp-footer-column h3,.mp-footer-column p,.mp-footer-column a,
+  .mp-footer-newsletter h3,.mp-footer-newsletter p,
+  .mp-newsletter input,.mp-newsletter input::placeholder,.mp-newsletter button{font-size:11px}
 }
 @media(max-width:560px){
   .mp-footer-main{direction:ltr}
   .mp-footer-main > .mp-footer-column{direction:rtl}
   .mp-social-widget__link{width:28px!important;height:28px!important}
   .mp-social-widget__icon-image{width:14px;height:14px}
+  .mp-footer-column .widget-title{font-size:11px}
+  .mp-footer-column .widget p,.mp-footer-column .widget a{font-size:11px}
+  .mp-footer-column h3,.mp-footer-column p,.mp-footer-column a,
+  .mp-footer-newsletter h3,.mp-footer-newsletter p,
+  .mp-newsletter input,.mp-newsletter input::placeholder,.mp-newsletter button{font-size:11px}
 }
