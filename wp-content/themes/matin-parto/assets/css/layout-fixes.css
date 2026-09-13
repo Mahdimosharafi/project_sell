@@ -1,0 +1,31 @@
+/* Header, hero and reviews layout fixes requested by the site owner. */
+
+/* Header actions: login/register must be the far-left item. */
+.mp-header__actions{direction:ltr!important;flex-direction:row!important;}
+.mp-header__actions .mp-account{order:1!important;}
+.mp-header__actions .mp-icon-button[aria-label="سبد خرید"]{order:2!important;}
+.mp-header__actions .mp-icon-button[aria-label="جستجو"]{order:3!important;}
+
+/* Hero: Persian copy on the left, Matin Parto / 7+ visual on the right. */
+.mp-hero__grid{direction:ltr!important;}
+.mp-hero__copy{grid-column:1!important;direction:rtl!important;text-align:right!important;}
+.mp-hero__visual{grid-column:2!important;direction:rtl!important;}
+.mp-hero__copy .mp-kicker,
+.mp-hero__copy h1,
+.mp-hero__copy h2,
+.mp-hero__copy p,
+.mp-hero__copy .mp-hero__subtext{direction:rtl!important;text-align:right!important;}
+
+/* Keep the fallback hero branding Persian when no image is configured. */
+.mp-hero__portrait span{font-family:"Vazirmatn","IRANSans",Tahoma,Arial,sans-serif!important;font-size:28px!important;line-height:1.45!important;letter-spacing:0!important;}
+
+/* Reviews heading: title on the right, 'view all' on the left. */
+.mp-reviews .mp-section-head{direction:ltr!important;display:flex!important;align-items:center!important;justify-content:space-between!important;}
+.mp-reviews .mp-section-head .mp-more{order:1!important;margin-right:0!important;margin-left:auto!important;}
+.mp-reviews .mp-section-head h2{order:2!important;margin-left:0!important;margin-right:0!important;direction:rtl!important;text-align:right!important;}
+
+@media(max-width:820px){
+    .mp-hero__grid{direction:rtl!important;}
+    .mp-hero__copy,.mp-hero__visual{grid-column:auto!important;}
+    .mp-reviews .mp-section-head{direction:ltr!important;}
+}
