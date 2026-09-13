@@ -15,7 +15,6 @@ function matin_parto_setup() {
 }
 add_action( 'after_setup_theme', 'matin_parto_setup' );
 
-// Use the modern block-based Widgets editor in Appearance > Widgets.
 add_filter( 'use_widgets_block_editor', '__return_true' );
 add_filter( 'gutenberg_use_widgets_block_editor', '__return_true' );
 
@@ -30,6 +29,8 @@ function matin_parto_enqueue_assets() {
         'matin-parto-home'    => '/assets/css/home.css',
         'matin-parto-footer'  => '/assets/css/footer-widgets.css',
         'matin-parto-rtl'     => '/rtl-fix.css',
+        // This file contains the final physical header-action positioning.
+        'matin-parto-final-ui' => '/assets/css/final-ui-fixes.css',
     );
     $deps = array();
     foreach ( $files as $handle => $file ) {
@@ -65,7 +66,6 @@ function matin_parto_customize_register( $wp_customize ) {
 }
 add_action( 'customize_register', 'matin_parto_customize_register' );
 
-// The actual footer widget registration and social widget live in the working theme package.
 require_once get_template_directory() . '/wp-content/themes/matin-parto/inc/footer-widgets.php';
 require_once get_template_directory() . '/wp-content/themes/matin-parto/inc/footer-widget-controls.php';
 
