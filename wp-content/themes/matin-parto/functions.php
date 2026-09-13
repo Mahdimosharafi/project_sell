@@ -19,6 +19,7 @@ function matin_parto_enqueue_assets() {
     wp_enqueue_style( 'matin-parto-polish', get_template_directory_uri() . '/assets/css/header-footer-polish.css', array( 'matin-parto-main' ), '2026.09.13' );
     wp_enqueue_style( 'matin-parto-home', get_template_directory_uri() . '/assets/css/home.css', array( 'matin-parto-polish' ), '2026.09.13' );
     wp_enqueue_style( 'matin-parto-footer', get_template_directory_uri() . '/assets/css/footer-widgets.css', array( 'matin-parto-home' ), '2026.09.13' );
+    wp_enqueue_style( 'matin-parto-layout-fixes', get_template_directory_uri() . '/assets/css/layout-fixes.css', array( 'matin-parto-footer' ), '2026.09.13.1' );
 
     $footer_hover_color = get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' );
     $footer_hover_color = sanitize_hex_color( $footer_hover_color );
