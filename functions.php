@@ -7,7 +7,6 @@ function matin_parto_setup() {
     add_theme_support( 'post-thumbnails' );
     add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 180, 'flex-height' => true, 'flex-width' => true ) );
     add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
-    remove_theme_support( 'widgets-block-editor' );
 
     register_nav_menus( array(
         'primary' => __( 'منوی اصلی', 'matin-parto' ),
@@ -16,9 +15,9 @@ function matin_parto_setup() {
 }
 add_action( 'after_setup_theme', 'matin_parto_setup' );
 
-// Make sure Appearance > Widgets opens the classic widget manager.
-add_filter( 'use_widgets_block_editor', '__return_false' );
-add_filter( 'gutenberg_use_widgets_block_editor', '__return_false' );
+// Use the modern block-based Widgets editor in Appearance > Widgets.
+add_filter( 'use_widgets_block_editor', '__return_true' );
+add_filter( 'gutenberg_use_widgets_block_editor', '__return_true' );
 
 /** Load the working theme assets kept in the repository package. */
 function matin_parto_enqueue_assets() {
