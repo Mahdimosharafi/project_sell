@@ -7,54 +7,55 @@ defined( 'ABSPATH' ) || exit;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php wp_head(); ?>
 <style>
-/* Header icon alignment fix */
-.mp-header__actions .mp-icon-button{
-  position:relative !important;
-  width:38px !important;
-  height:38px !important;
-  min-width:38px !important;
-  min-height:38px !important;
-  padding:0 !important;
-  margin:0 !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  place-items:center !important;
-  line-height:0 !important;
-  box-sizing:border-box !important;
+/* FINAL: exact geometric centering for search/cart icons inside their own squares */
+.mp-header__actions .mp-icon-button {
+  position: relative !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  line-height: 0 !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
 }
-.mp-header__actions .mp-icon-button svg{
-  position:absolute !important;
-  top:50% !important;
-  left:50% !important;
-  width:17px !important;
-  height:17px !important;
-  margin:0 !important;
-  transform:translate(-50%,-50%) !important;
-  display:block !important;
-  flex:0 0 auto !important;
+.mp-header__actions .mp-icon-button svg {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 17px !important;
+  height: 17px !important;
+  margin: auto !important;
+  transform: none !important;
+  display: block !important;
+  flex: none !important;
 }
-.mp-header__actions .mp-icon-button .mp-badge{
-  top:2px !important;
-  right:4px !important;
-  transform:none !important;
+.mp-header__actions .mp-icon-button .mp-badge {
+  position: absolute !important;
+  inset: 2px 4px auto auto !important;
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 !important;
+  transform: none !important;
 }
-.mp-header__actions .mp-account{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  line-height:1 !important;
+.mp-header__actions .mp-account {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
 }
 @media(max-width:560px){
-  .mp-header__actions .mp-icon-button{
-    width:34px !important;
-    height:34px !important;
-    min-width:34px !important;
-    min-height:34px !important;
+  .mp-header__actions .mp-icon-button {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
   }
-  .mp-header__actions .mp-icon-button svg{
-    width:16px !important;
-    height:16px !important;
+  .mp-header__actions .mp-icon-button svg {
+    width: 16px !important;
+    height: 16px !important;
   }
 }
 </style>
