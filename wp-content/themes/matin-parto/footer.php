@@ -30,9 +30,32 @@ $footer_hover_color = $footer_hover_color ? $footer_hover_color : '#7b2636';
 .mp-footer-column .menu a:focus-visible{color:<?php echo esc_attr( $footer_hover_color ); ?>!important;-webkit-text-fill-color:<?php echo esc_attr( $footer_hover_color ); ?>!important}
 .mp-footer-column .widget ul li a:hover,
 .mp-footer-column .wp-block-list li a:hover{transform:translateX(-2px)!important}
+
+/* Correct Persian visual order: About right -> Categories -> Quick links -> Newsletter left. */
+.mp-footer-main{direction:ltr!important}
+.mp-footer-main .mp-footer-column{direction:rtl!important;text-align:right!important}
+.mp-footer-main .mp-footer-about{grid-column:4!important;order:initial!important;justify-self:stretch!important}
+.mp-footer-main .mp-footer-categories{grid-column:3!important;order:initial!important}
+.mp-footer-main .mp-footer-quick-links{grid-column:2!important;order:initial!important}
+.mp-footer-main .mp-footer-newsletter{grid-column:1!important;order:initial!important}
+
+/* Correct homepage hero: +7 years badge/visual right, learning content left. */
+.mp-hero__grid{direction:ltr!important}
+.mp-hero__copy{direction:rtl!important;text-align:right!important}
+.mp-hero__visual{direction:rtl!important}
+
+/* Correct homepage benefits: permanent access right, then support, system, courses toward left. */
+.mp-benefits{direction:ltr!important}
+.mp-benefit{direction:rtl!important;text-align:right!important}
+
 @media(max-width:820px){
   .mp-footer-column h3,.mp-footer-column .widget-title{font-size:10px!important}
   .mp-footer-column p,.mp-footer-column a,.mp-footer-widget li,.mp-footer-widget p{font-size:8px!important}
+  .mp-footer-main{direction:ltr!important}
+  .mp-footer-main .mp-footer-about{grid-column:auto!important}
+  .mp-footer-main .mp-footer-categories{grid-column:auto!important}
+  .mp-footer-main .mp-footer-quick-links{grid-column:auto!important}
+  .mp-footer-main .mp-footer-newsletter{grid-column:auto!important}
 }
 </style>
 <footer class="mp-footer" id="contact">
