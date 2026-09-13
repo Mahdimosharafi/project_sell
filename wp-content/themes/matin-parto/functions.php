@@ -145,6 +145,35 @@ function matin_parto_register_social_widget() {
 }
 add_action( 'widgets_init', 'matin_parto_register_social_widget' );
 
+function matin_parto_seed_social_widget() {
+    if ( get_option( 'matin_parto_social_widget_migrated', false ) ) {
+        return;
+    }
+    $sidebars = get_option( 'sidebars_widgets', array() );
+    if ( ! empty( $sidebars['matin-parto-social'] ) ) {
+        update_option( 'matin_parto_social_widget_migrated', 1 );
+        return;
+    }
+    $home = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
+    $instance = array(
+        'title'     => 'در شبکه‌های اجتماعی همراه باشید',
+        'text'      => 'محتوای رایگان، نکات آموزشی و اخبار دوره‌ها',
+        'instagram' => ! empty( $home['social_instagram'] ) ? $home['social_instagram'] : '',
+        'telegram'  => ! empty( $home['social_telegram'] ) ? $home['social_telegram'] : '',
+        'youtube'   => ! empty( $home['social_youtube'] ) ? $home['social_youtube'] : '',
+        'facebook'  => ! empty( $home['social_facebook'] ) ? $home['social_facebook'] : '',
+    );
+    $widget_instances = get_option( 'widget_matin_parto_social', array() );
+    $number = 1;
+    while ( isset( $widget_instances[ $number ] ) ) { $number++; }
+    $widget_instances[ $number ] = $instance;
+    update_option( 'widget_matin_parto_social', $widget_instances );
+    $sidebars['matin-parto-social'] = array( 'matin_parto_social-' . $number );
+    update_option( 'sidebars_widgets', $sidebars );
+    update_option( 'matin_parto_social_widget_migrated', 1 );
+}
+add_action( 'widgets_init', 'matin_parto_seed_social_widget', 110 );
+
 function matin_parto_footer_settings_menu() {
     add_theme_page( 'تنظیمات فوتر', 'تنظیمات فوتر', 'manage_options', 'matin-parto-footer', 'matin_parto_footer_settings_page' );
 }
