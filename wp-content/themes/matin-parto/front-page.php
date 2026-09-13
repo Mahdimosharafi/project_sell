@@ -3,7 +3,7 @@ defined( 'ABSPATH' ) || exit;
 
 $home = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
 $hero_image = ! empty( $home['hero_image'] ) ? $home['hero_image'] : '';
-$cta_image  = ! empty( $home['cta_image'] ) ? $home['cta_image'] : $hero_image;
+$cta_image  = ! empty( $home['cta_image'] ) ? $home['cta_image'] : '';
 $categories = array(
     array( 'آمادگی آزمون', 'Exam Preparation', '۲۲ درس' ),
     array( 'لغات و اصطلاحات', 'Vocabulary', '۱۸ درس' ),
@@ -26,6 +26,12 @@ $benefits = array(
     array( 'cap', 'سیستم آموزشی اصولی', 'مسیر یادگیری استاندارد و منظم' ),
     array( 'headset', 'پشتیبانی و همراهی', 'همراه شما در مسیر یادگیری' ),
     array( 'lock', 'دسترسی دائمی', 'یادگیری بدون محدودیت زمانی' ),
+);
+$socials = array(
+    'instagram' => ! empty( $home['social_instagram'] ) ? $home['social_instagram'] : '',
+    'telegram'  => ! empty( $home['social_telegram'] ) ? $home['social_telegram'] : '',
+    'youtube'   => ! empty( $home['social_youtube'] ) ? $home['social_youtube'] : '',
+    'facebook'  => ! empty( $home['social_facebook'] ) ? $home['social_facebook'] : '',
 );
 get_header();
 ?>
@@ -75,6 +81,28 @@ get_header();
         <?php foreach ( $reviews as $review ) : ?><article class="mp-review-card"><div class="mp-stars" aria-label="۵ ستاره"><?php echo str_repeat( '★', (int) $review[3] ); ?></div><p><?php echo esc_html( $review[2] ); ?></p><div class="mp-review-author"><span></span><div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small></div></div></article><?php endforeach; ?>
     </div></div></section>
 
-    <section class="mp-home-cta mp-container"><div class="mp-home-cta__person <?php echo $cta_image ? 'has-image' : ''; ?>" <?php echo $cta_image ? 'style="background-image:url(' . esc_url( $cta_image ) . ')"' : ''; ?> aria-hidden="true"></div><div><h2>همین امروز شروع کنید!</h2><p>دسترسی به ده‌ها ویدئو و دوره آموزشی</p><a class="mp-button mp-button--light" href="#courses">شروع یادگیری رایگان</a></div><div class="mp-home-cta__social"><b>در شبکه‌های اجتماعی همراه باشید</b><span>محتوای رایگان، نکات آموزشی و اخبار دوره‌ها</span><div>◎　➤　▶　◉</div></div></section>
+    <section class="mp-home-cta mp-container">
+        <div class="mp-home-cta__social">
+            <b>در شبکه‌های اجتماعی همراه باشید</b>
+            <span>محتوای رایگان، نکات آموزشی و اخبار دوره‌ها</span>
+            <?php if ( array_filter( $socials ) ) : ?>
+                <div class="mp-social-icons" aria-label="شبکه‌های اجتماعی">
+                    <?php foreach ( $socials as $network => $url ) : if ( ! $url ) { continue; } ?>
+                        <a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( ucfirst( $network ) ); ?>" class="mp-social-icon mp-social-icon--<?php echo esc_attr( $network ); ?>"><?php echo function_exists( 'matin_parto_social_icon' ) ? matin_parto_social_icon( $network ) : ''; ?></a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="mp-home-cta__person <?php echo $cta_image ? 'has-image' : ''; ?>" aria-hidden="true">
+            <?php if ( $cta_image ) : ?><img src="<?php echo esc_url( $cta_image ); ?>" alt="" loading="lazy"><?php endif; ?>
+        </div>
+
+        <div class="mp-home-cta__copy">
+            <h2>همین امروز شروع کنید!</h2>
+            <p>دسترسی به ده‌ها ویدئو و دوره آموزشی</p>
+            <a class="mp-button mp-button--light" href="#courses">شروع یادگیری رایگان</a>
+        </div>
+    </section>
 </main>
 <?php get_footer(); ?>
