@@ -4,8 +4,8 @@ $footer_copyright = get_theme_mod( 'matin_parto_footer_copyright', 'ماتین �
 $footer_note = get_theme_mod( 'matin_parto_footer_note', 'طراحی و توسعه با وردپرس' );
 $privacy_url = get_theme_mod( 'matin_parto_footer_privacy_url', '' );
 $terms_url = get_theme_mod( 'matin_parto_footer_terms_url', '' );
-$home_settings = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
-$footer_hover_color = ! empty( $home_settings['footer_hover_color'] ) ? sanitize_hex_color( $home_settings['footer_hover_color'] ) : '#8f3048';
+$footer_hover_color = get_theme_mod( 'matin_parto_footer_hover_color', '#8f3048' );
+$footer_hover_color = sanitize_hex_color( $footer_hover_color );
 $footer_hover_color = $footer_hover_color ? $footer_hover_color : '#8f3048';
 ?>
 <style>
