@@ -7,13 +7,6 @@ $terms_url = get_theme_mod( 'matin_parto_footer_terms_url', '' );
 $footer_hover_color = get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' );
 $footer_hover_color = sanitize_hex_color( $footer_hover_color );
 $footer_hover_color = $footer_hover_color ? $footer_hover_color : '#7b2636';
-$footer_home = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
-$footer_socials = array(
-    'instagram' => ! empty( $footer_home['social_instagram'] ) ? $footer_home['social_instagram'] : '',
-    'telegram'  => ! empty( $footer_home['social_telegram'] ) ? $footer_home['social_telegram'] : '',
-    'youtube'   => ! empty( $footer_home['social_youtube'] ) ? $footer_home['social_youtube'] : '',
-    'facebook'  => ! empty( $footer_home['social_facebook'] ) ? $footer_home['social_facebook'] : '',
-);
 ?>
 <style>
 .mp-footer-main .mp-footer-about{order:1}
@@ -32,9 +25,14 @@ $footer_socials = array(
 .mp-footer-main .mp-footer-quick-links{grid-column:2!important;order:initial!important}
 .mp-footer-main .mp-footer-newsletter{grid-column:1!important;order:initial!important}
 .mp-footer-social{direction:rtl!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;padding:18px 0 2px!important}
-.mp-footer-social a{width:30px!important;height:30px!important;border:1px solid #d9c8ca!important;border-radius:50%!important;display:grid!important;place-items:center!important;color:#7b2636!important;text-decoration:none!important;transition:transform .2s ease,background .2s ease,color .2s ease!important}
-.mp-footer-social a:hover,.mp-footer-social a:focus-visible{color:<?php echo esc_attr( $footer_hover_color ); ?>!important;background:#fff!important;transform:translateY(-2px)!important}
-.mp-footer-social svg{width:15px!important;height:15px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.mp-footer-social .mp-social-widget{width:100%!important;text-align:center!important}
+.mp-footer-social .mp-social-widget__content{display:flex!important;flex-direction:column!important;align-items:center!important;gap:4px!important}
+.mp-footer-social .mp-social-widget__title{font-size:11px!important;line-height:1.7!important}
+.mp-footer-social .mp-social-widget__text{font-size:9px!important;line-height:1.9!important;color:#746b6d!important}
+.mp-footer-social .mp-social-icons{display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;margin-top:8px!important}
+.mp-footer-social .mp-social-icon{width:30px!important;height:30px!important;border:1px solid #d9c8ca!important;border-radius:50%!important;display:grid!important;place-items:center!important;color:#7b2636!important;text-decoration:none!important;transition:transform .2s ease,background .2s ease,color .2s ease!important}
+.mp-footer-social .mp-social-icon:hover,.mp-footer-social .mp-social-icon:focus-visible{color:<?php echo esc_attr( $footer_hover_color ); ?>!important;background:#fff!important;transform:translateY(-2px)!important}
+.mp-footer-social .mp-social-icon svg{width:15px!important;height:15px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 .mp-footer-social .mp-social-icon--telegram svg,.mp-footer-social .mp-social-icon--youtube svg,.mp-footer-social .mp-social-icon--facebook svg{fill:currentColor!important;stroke:none!important}
 @media(max-width:820px){
   .mp-footer-column h3,.mp-footer-column .widget-title{font-size:10px!important}
@@ -51,12 +49,8 @@ $footer_socials = array(
 <div class="mp-footer-column mp-footer-quick-links"><h3>دسترسی سریع</h3><ul><li><a href="<?php echo esc_url( home_url( '/#courses' ) ); ?>">دوره‌ها</a></li><li><a href="<?php echo esc_url( home_url( '/#videos' ) ); ?>">ویدئوهای آموزشی</a></li><li><a href="<?php echo esc_url( home_url( '/#blog' ) ); ?>">وبلاگ</a></li><li><a href="<?php echo esc_url( home_url( '/#about' ) ); ?>">درباره من</a></li><li><a href="#contact">تماس با ما</a></li></ul></div>
 <div class="mp-footer-column mp-footer-about"><h3>درباره من</h3><p>من با بیش از ۷ سال تجربه در آموزش زبان انگلیسی، در کنار شما هستم تا مسیر یادگیری را ساده و کاربردی دنبال کنید.</p></div>
 </section>
-<?php if ( array_filter( $footer_socials ) && function_exists( 'matin_parto_social_icon' ) ) : ?>
-<div class="mp-footer-social" aria-label="شبکه‌های اجتماعی">
-    <?php foreach ( $footer_socials as $network => $url ) : if ( ! $url ) { continue; } ?>
-        <a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( ucfirst( $network ) ); ?>" class="mp-social-icon mp-social-icon--<?php echo esc_attr( $network ); ?>"><?php echo matin_parto_social_icon( $network ); ?></a>
-    <?php endforeach; ?>
-</div>
+<?php if ( is_active_sidebar( 'matin-parto-social' ) ) : ?>
+<div class="mp-footer-social" aria-label="شبکه‌های اجتماعی"><?php dynamic_sidebar( 'matin-parto-social' ); ?></div>
 <?php endif; ?>
 <div class="mp-footer-bottom"><span><?php echo esc_html( $footer_copyright ); ?></span><div><?php if ( $privacy_url ) : ?><a href="<?php echo esc_url( $privacy_url ); ?>">حریم خصوصی</a><?php else : ?><span>حریم خصوصی</span><?php endif; ?> <?php if ( $terms_url ) : ?><a href="<?php echo esc_url( $terms_url ); ?>">قوانین و مقررات</a><?php else : ?><span>قوانین و مقررات</span><?php endif; ?></div><span><?php echo esc_html( $footer_note ); ?></span></div>
 </div>
