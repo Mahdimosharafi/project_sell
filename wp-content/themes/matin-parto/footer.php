@@ -4,9 +4,9 @@ $footer_copyright = get_theme_mod( 'matin_parto_footer_copyright', 'ماتین �
 $footer_note = get_theme_mod( 'matin_parto_footer_note', 'طراحی و توسعه با وردپرس' );
 $privacy_url = get_theme_mod( 'matin_parto_footer_privacy_url', '' );
 $terms_url = get_theme_mod( 'matin_parto_footer_terms_url', '' );
-$footer_hover_color = get_theme_mod( 'matin_parto_footer_hover_color', '#8f3048' );
+$footer_hover_color = get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' );
 $footer_hover_color = sanitize_hex_color( $footer_hover_color );
-$footer_hover_color = $footer_hover_color ? $footer_hover_color : '#8f3048';
+$footer_hover_color = $footer_hover_color ? $footer_hover_color : '#7b2636';
 ?>
 <style>
 /* Footer layout, scale and widget-menu hover */
@@ -46,5 +46,27 @@ $footer_hover_color = $footer_hover_color ? $footer_hover_color : '#8f3048';
 <div class="mp-footer-bottom"><span><?php echo esc_html( $footer_copyright ); ?></span><div><?php if ( $privacy_url ) : ?><a href="<?php echo esc_url( $privacy_url ); ?>">حریم خصوصی</a><?php else : ?><span>حریم خصوصی</span><?php endif; ?> <?php if ( $terms_url ) : ?><a href="<?php echo esc_url( $terms_url ); ?>">قوانین و مقررات</a><?php else : ?><span>قوانین و مقررات</span><?php endif; ?></div><span><?php echo esc_html( $footer_note ); ?></span></div>
 </div>
 </footer>
+<script>
+(function(){
+  var footerColor = <?php echo wp_json_encode( $footer_hover_color ); ?>;
+  function bindFooterHover(){
+    var links = document.querySelectorAll('.mp-footer .mp-footer-column li a, .mp-footer .mp-footer-column .menu a, .mp-footer .mp-footer-column nav a, .mp-footer .mp-footer-column .widget a, .mp-footer .mp-footer-column .wp-block-list a');
+    links.forEach(function(link){
+      if (link.dataset.mpHoverBound) return;
+      link.dataset.mpHoverBound = '1';
+      link.addEventListener('mouseenter', function(){
+        this.style.setProperty('color', footerColor, 'important');
+        this.style.setProperty('-webkit-text-fill-color', footerColor, 'important');
+      });
+      link.addEventListener('mouseleave', function(){
+        this.style.removeProperty('color');
+        this.style.removeProperty('-webkit-text-fill-color');
+      });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindFooterHover);
+  else bindFooterHover();
+})();
+</script>
 <a class="mp-support" href="#contact" aria-label="پشتیبانی آنلاین"><span>پشتیبانی آنلاین</span><span class="mp-support__icon">◌</span></a>
 <?php wp_footer(); ?></body></html>
