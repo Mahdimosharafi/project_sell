@@ -20,10 +20,23 @@ $videos = array(
     array( 'Diamonds - Rihanna', 'گرامر و لغات', '06:15', '#16' ),
 );
 $reviews = array(
-    array( 'مریم احمدی', 'زبان‌آموز دوره پیشرفته', 'بهترین سرمایه‌گذاری که برای یادگیری زبان داشتم؛ محتوای آموزشی استاد عالیه!', 5 ),
-    array( 'علی رضایی', 'زبان‌آموز دوره متوسط', 'بعد از شرکت در دوره‌ها اعتماد به نفسم در مکالمه خیلی بیشتر شده.', 5 ),
-    array( 'نیلوفر محمدی', 'زبان‌آموز دوره مکالمه', 'دوره‌های منسجم، دیدگاه زبان انگلیسی من را خیلی بهتر کرد.', 5 ),
+    array( 'مریم احمدی', 'زبان‌آموز دوره پیشرفته', 'بهترین سرمایه‌گذاری که برای یادگیری زبان داشتم؛ محتوای آموزشی استاد عالیه!', 5, 0 ),
+    array( 'علی رضایی', 'زبان‌آموز دوره متوسط', 'بعد از شرکت در دوره‌ها اعتماد به نفسم در مکالمه خیلی بیشتر شده.', 5, 0 ),
+    array( 'نیلوفر محمدی', 'زبان‌آموز دوره مکالمه', 'دوره‌های منسجم، دیدگاه زبان انگلیسی من را خیلی بهتر کرد.', 5, 0 ),
 );
+if ( function_exists( 'matin_parto_get_testimonials' ) ) {
+    $testimonial_query = matin_parto_get_testimonials( 3 );
+    if ( $testimonial_query->have_posts() ) {
+        $reviews = array();
+        while ( $testimonial_query->have_posts() ) {
+            $testimonial_query->the_post();
+            $rating = max( 1, min( 5, absint( get_post_meta( get_the_ID(), '_mp_testimonial_rating', true ) ?: 5 ) ) );
+            $course = get_post_meta( get_the_ID(), '_mp_testimonial_course', true );
+            $reviews[] = array( get_the_title(), $course, wp_strip_all_tags( get_the_content() ), $rating, get_post_thumbnail_id() );
+        }
+        wp_reset_postdata();
+    }
+}
 $benefits = array(
     array( 'book', 'دوره‌های جامع و کاربردی', 'از سطح مبتدی تا پیشرفته' ),
     array( 'cap', 'سیستم آموزشی اصولی', 'مسیر یادگیری استاندارد و منظم' ),
@@ -75,16 +88,28 @@ get_header();
     </div></div></section>
 
     <section class="mp-reviews mp-section" id="reviews"><div class="mp-container"><div class="mp-section-head"><h2>نظرات زبان‌آموزان</h2><a class="mp-more" href="#reviews">مشاهده همه نظرات</a></div><div class="mp-review-grid">
-        <?php foreach ( $reviews as $review ) : ?><article class="mp-review-card"><div class="mp-stars" aria-label="۵ ستاره"><?php echo str_repeat( '★', (int) $review[3] ); ?></div><p><?php echo esc_html( $review[2] ); ?></p><div class="mp-review-author"><span></span><div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small></div></div></article><?php endforeach; ?>
+        <?php foreach ( $reviews as $review ) : ?>
+            <article class="mp-review-card">
+                <div class="mp-stars" aria-label="<?php echo esc_attr( $review[3] . ' ستاره' ); ?>"><?php echo str_repeat( '★', (int) $review[3] ); ?></div>
+                <p><?php echo esc_html( $review[2] ); ?></p>
+                <div class="mp-review-author">
+                    <?php if ( ! empty( $review[4] ) ) : ?>
+                        <?php echo wp_get_attachment_image( $review[4], array( 48, 48 ), false, array( 'class' => 'mp-review-avatar', 'alt' => esc_attr( $review[0] ) ) ); ?>
+                    <?php else : ?>
+                        <span class="mp-review-avatar-placeholder" aria-hidden="true"></span>
+                    <?php endif; ?>
+                    <div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small></div>
+                </div>
+            </article>
+        <?php endforeach; ?>
     </div></div></section>
 
     <section class="mp-home-cta mp-container">
         <div class="mp-home-cta__social">
-            <?php if ( is_active_sidebar( 'matin-parto-social' ) ) : ?>
-                <?php dynamic_sidebar( 'matin-parto-social' ); ?>
-            <?php else : ?>
-                <b>در شبکه‌های اجتماعی همراه باشید</b>
-                <span>محتوای رایگان، نکات آموزشی و اخبار دوره‌ها</span>
+            <b>در شبکه‌های اجتماعی همراه باشید</b>
+            <span>محتوای رایگان، نکات آموزشی و اخبار دوره‌ها</span>
+            <?php if ( function_exists( 'matin_parto_social_links_html' ) ) : ?>
+                <?php matin_parto_social_links_html(); ?>
             <?php endif; ?>
         </div>
 
