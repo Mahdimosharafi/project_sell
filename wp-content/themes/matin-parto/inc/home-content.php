@@ -20,8 +20,8 @@ function matin_parto_register_testimonials() {
         ),
         'public'              => false,
         'show_ui'             => true,
-        'show_in_menu'        => true,
-        'menu_position'       => 21,
+        'show_in_menu'        => false,
+        'show_in_admin_bar'   => true,
         'menu_icon'           => 'dashicons-format-chat',
         'supports'            => array( 'title', 'editor', 'thumbnail' ),
         'show_in_rest'        => true,
@@ -31,6 +31,20 @@ function matin_parto_register_testimonials() {
     ) );
 }
 add_action( 'init', 'matin_parto_register_testimonials' );
+
+/* منوی مستقل پیشخوان؛ این منو حتی اگر جایگاه‌های پیش‌فرض وردپرس تغییر کنند نمایش داده می‌شود. */
+function matin_parto_testimonials_admin_menu() {
+    add_menu_page(
+        'نظرات زبان‌آموزان',
+        'نظرات زبان‌آموزان',
+        'edit_posts',
+        'edit.php?post_type=mp_testimonial',
+        '',
+        'dashicons-format-chat',
+        26
+    );
+}
+add_action( 'admin_menu', 'matin_parto_testimonials_admin_menu', 9 );
 
 function matin_parto_testimonial_meta_box() {
     add_meta_box(
@@ -92,12 +106,12 @@ add_action( 'save_post_mp_testimonial', 'matin_parto_save_testimonial_meta' );
 
 function matin_parto_testimonial_admin_columns( $columns ) {
     return array(
-        'cb'       => $columns['cb'],
-        'title'    => 'نام زبان‌آموز',
-        'course'   => 'نوع دوره / یادگیری',
-        'rating'   => 'امتیاز',
-        'thumbnail'=> 'عکس',
-        'date'     => 'تاریخ',
+        'cb'        => $columns['cb'],
+        'title'     => 'نام زبان‌آموز',
+        'course'    => 'نوع دوره / یادگیری',
+        'rating'    => 'امتیاز',
+        'thumbnail' => 'عکس',
+        'date'      => 'تاریخ',
     );
 }
 add_filter( 'manage_mp_testimonial_posts_columns', 'matin_parto_testimonial_admin_columns' );
@@ -149,6 +163,16 @@ function matin_parto_add_social_customizer( $wp_customize ) {
 }
 add_action( 'customize_register', 'matin_parto_add_social_customizer', 20 );
 
+function matin_parto_social_icon( $network ) {
+    $icons = array(
+        'whatsapp' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.7a8.3 8.3 0 0 1-12.2 7.1L4 20l1.3-4.1a8.3 8.3 0 1 1 15.2-4.2Z"/><path d="M9 8.4c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c.6 1.1 1.5 2 2.7 2.5l.5-.6c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.3.6-.2.8-.9 1.4-1.8 1.4-3.2-.1-6.8-3.7-6.9-6.9 0-.2.1-.4.2-.6Z"/></svg>',
+        'telegram' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3.8 10.6c-.7.3-.7 1.2.1 1.5l4.4 1.6 1.7 5.1c.2.6 1 .7 1.4.2l2.5-3.1 4.4 3.2c.5.4 1.2.1 1.4-.5L22 5c.1-.7-.4-1.2-1-1Z"/><path d="m8.4 13.7 8.8-6.1-6.2 7.5"/></svg>',
+        'instagram' => '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg>',
+        'youtube' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.2a2.8 2.8 0 0 0-2-2C17.3 5.7 12 5.7 12 5.7s-5.3 0-7 .5a2.8 2.8 0 0 0-2 2A29 29 0 0 0 2.5 12 29 29 0 0 0 3 15.8a2.8 2.8 0 0 0 2 2c1.7.5 7 .5 7 .5s5.3 0 7-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .5-3.8 29 29 0 0 0-.5-3.8Z"/><path d="m10 9 5 3-5 3V9Z" fill="currentColor" stroke="none"/></svg>',
+    );
+    return isset( $icons[ $network ] ) ? $icons[ $network ] : '';
+}
+
 function matin_parto_social_links_html( $class = '' ) {
     $socials = array(
         'whatsapp'  => 'واتساپ',
@@ -163,7 +187,9 @@ function matin_parto_social_links_html( $class = '' ) {
         if ( ! $url ) {
             continue;
         }
-        echo '<a class="mp-home-social-link mp-home-social-link--' . esc_attr( $key ) . '" href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $label ) . '</a>';
+        echo '<a class="mp-home-social-link mp-home-social-link--' . esc_attr( $key ) . '" href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer" aria-label="' . esc_attr( $label ) . '">';
+        echo matin_parto_social_icon( $key );
+        echo '<span>' . esc_html( $label ) . '</span></a>';
     }
     echo '</div>';
 }
