@@ -24,13 +24,17 @@ function matin_parto_about_ensure_page() {
     if ( $existing instanceof WP_Post ) {
         return;
     }
-    wp_insert_post( array(
+    $page_id = wp_insert_post( array(
         'post_title'   => 'درباره من',
         'post_name'    => 'about',
         'post_status'  => 'publish',
         'post_type'    => 'page',
         'post_content' => '',
     ) );
+    if ( $page_id && ! get_option( 'matin_parto_about_rewrite_flushed' ) ) {
+        flush_rewrite_rules( false );
+        update_option( 'matin_parto_about_rewrite_flushed', 1, false );
+    }
 }
 add_action( 'init', 'matin_parto_about_ensure_page', 20 );
 
@@ -54,7 +58,7 @@ function matin_parto_about_template( $template ) {
 }
 add_filter( 'template_include', 'matin_parto_about_template', 99 );
 
-/* همه لینک‌های متنی/منویی به مقصد یکسان صفحه درباره من هدایت شوند. */
+/* لینک‌های منوی هدر/فوتر که عنوانشان «درباره» است به همین صفحه می‌روند. */
 function matin_parto_about_link_filter( $items, $args ) {
     if ( empty( $items ) || ! is_array( $items ) ) {
         return $items;
