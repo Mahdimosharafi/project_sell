@@ -38,7 +38,6 @@ function matin_parto_about_ensure_page() {
 }
 add_action( 'init', 'matin_parto_about_ensure_page', 20 );
 
-/* هر صفحه‌ای که برای «درباره» ساخته شده باشد از قالب اختصاصی همین صفحه استفاده می‌کند. */
 function matin_parto_about_template( $template ) {
     if ( ! is_page() ) {
         return $template;
@@ -57,6 +56,16 @@ function matin_parto_about_template( $template ) {
     return $template;
 }
 add_filter( 'template_include', 'matin_parto_about_template', 99 );
+
+function matin_parto_about_assets() {
+    if ( is_page() ) {
+        $post = get_queried_object();
+        if ( $post instanceof WP_Post && ( false !== strpos( strtolower( $post->post_name ), 'about' ) || false !== strpos( $post->post_title, 'درباره' ) ) ) {
+            wp_enqueue_style( 'matin-parto-about-page', get_theme_file_uri( 'assets/css/about-page.css' ), array( 'matin-parto-cta-social' ), '2026.09.14-4' );
+        }
+    }
+}
+add_action( 'wp_enqueue_scripts', 'matin_parto_about_assets', 40 );
 
 /* لینک‌های منوی هدر/فوتر که عنوانشان «درباره» است به همین صفحه می‌روند. */
 function matin_parto_about_link_filter( $items, $args ) {
