@@ -16,7 +16,7 @@ function matin_parto_about_page_match() {
     }
     $title = wp_strip_all_tags( $page->post_title );
     $slug  = (string) $page->post_name;
-    return false !== mb_strpos( $title, 'درباره' ) || false !== mb_strpos( $title, 'معرفی' ) || in_array( strtolower( $slug ), array( 'about', 'about-us', 'about-me', 'درباره', 'درباره-من', 'درباره-ما' ), true );
+    return false !== strpos( $title, 'درباره' ) || false !== strpos( $title, 'معرفی' ) || in_array( strtolower( $slug ), array( 'about', 'about-us', 'about-me', 'درباره', 'درباره-من', 'درباره-ما' ), true );
 }
 
 function matin_parto_force_about_template( $template ) {
@@ -33,7 +33,7 @@ function matin_parto_about_assets() {
         return;
     }
     $css = content_url( 'themes/matin-parto/assets/css/about-page.css' );
-    wp_enqueue_style( 'matin-parto-about-forced', $css, array(), '2026.09.14.8' );
+    wp_enqueue_style( 'matin-parto-about-forced', $css, array(), '2026.09.14.9' );
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_about_assets', 9999 );
 
@@ -72,12 +72,12 @@ function matin_parto_about_links_to_page( $atts, $item, $args ) {
         return $atts;
     }
     $title = wp_strip_all_tags( $item->title );
-    if ( false !== mb_strpos( $title, 'درباره' ) || false !== mb_strpos( $title, 'معرفی' ) ) {
+    if ( false !== strpos( $title, 'درباره' ) || false !== strpos( $title, 'معرفی' ) ) {
         $page = get_page_by_path( 'about' );
         if ( ! $page ) {
             $pages = get_pages( array( 'post_status' => 'publish', 'number' => 100 ) );
             foreach ( $pages as $candidate ) {
-                if ( false !== mb_strpos( wp_strip_all_tags( $candidate->post_title ), 'درباره' ) ) {
+                if ( false !== strpos( wp_strip_all_tags( $candidate->post_title ), 'درباره' ) ) {
                     $page = $candidate;
                     break;
                 }
