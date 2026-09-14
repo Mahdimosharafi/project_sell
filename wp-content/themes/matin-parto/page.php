@@ -1,29 +1,27 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-/*
- * صفحه درباره من/ما باید همیشه قالب اختصاصی خودش را بگیرد.
- * علاوه بر is_page، عنوان، slug و مسیر درخواست را هم بررسی می‌کنیم تا
- * اگر تنظیمات permalink یا کش/Rewrite متفاوت بود، صفحه دوباره عمومی نشود.
- */
-$page        = is_page() ? get_queried_object() : null;
-$page_title  = $page instanceof WP_Post ? wp_strip_all_tags( $page->post_title ) : '';
-$page_slug   = $page instanceof WP_Post ? strtolower( (string) $page->post_name ) : '';
-$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? strtolower( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+/* صفحه درباره: این قالب عمداً مستقیم page-about.php را اجرا می‌کند تا هیچ
+ * محتوای قدیمی یا قالب عمومی وردپرس نتواند صفحه را جایگزین کند. */
+if ( is_page() ) {
+    $page = get_queried_object();
+    $title = $page instanceof WP_Post ? wp_strip_all_tags( $page->post_title ) : '';
+    $slug  = $page instanceof WP_Post ? strtolower( (string) $page->post_name ) : '';
+    $uri   = isset( $_SERVER['REQUEST_URI'] ) ? strtolower( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 
-$is_about_page = (
-    ( is_page() && ( false !== strpos( $page_title, 'درباره' ) || false !== strpos( $page_title, 'معرفی' ) ) ) ||
-    in_array( $page_slug, array( 'about', 'about-us', 'about-me', 'درباره', 'درباره-من', 'درباره-ما' ), true ) ||
-    false !== strpos( $request_uri, '/about' ) ||
-    false !== strpos( $request_uri, 'درباره' )
-);
+    $is_about = false !== strpos( $title, 'درباره' )
+        || false !== strpos( $title, 'معرفی' )
+        || in_array( $slug, array( 'about', 'about-us', 'about-me', 'درباره', 'درباره-من', 'درباره-ما' ), true )
+        || false !== strpos( $uri, '/about' )
+        || false !== strpos( $uri, 'درباره' );
 
-if ( $is_about_page ) {
-    $about_template = get_theme_file_path( 'page-about.php' );
-    if ( file_exists( $about_template ) ) {
-        nocache_headers();
-        include $about_template;
-        return;
+    if ( $is_about ) {
+        $about_template = get_theme_file_path( 'page-about.php' );
+        if ( file_exists( $about_template ) ) {
+            nocache_headers();
+            include $about_template;
+            return;
+        }
     }
 }
 
