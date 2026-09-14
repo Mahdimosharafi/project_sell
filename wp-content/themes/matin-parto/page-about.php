@@ -10,9 +10,7 @@ if ( ! $about_hero && ! empty( $home['hero_image'] ) ) { $about_hero = $home['he
 if ( ! $about_video && ! empty( $home['hero_image'] ) ) { $about_video = $home['hero_image']; }
 if ( ! $about_story && ! empty( $home['hero_image'] ) ) { $about_story = $home['hero_image']; }
 
-$reviews = array(
-    array( 'سارا محمدی', 'Intermediate زبان‌آموز دوره', '«متین پارتو فقط یک مدرس نیست؛ یک همراه واقعی در مسیر یادگیریه. با صبر، انگیزه و روش‌های عالی تدریس، باعث شد من با اعتماد به نفس بیشتری صحبت کنم.»', 5, 0 ),
-);
+$reviews = array( array( 'سارا محمدی', 'Intermediate زبان‌آموز دوره', '«متین پارتو فقط یک مدرس نیست؛ یک همراه واقعی در مسیر یادگیریه. با صبر، انگیزه و روش‌های عالی تدریس، باعث شد من با اعتماد به نفس بیشتری صحبت کنم.»', 5, 0 ) );
 if ( function_exists( 'matin_parto_get_testimonials' ) ) {
     $q = matin_parto_get_testimonials( 1 );
     if ( $q->have_posts() ) {
@@ -30,12 +28,11 @@ if ( function_exists( 'matin_parto_get_testimonials' ) ) {
 $reasons = array(
     array( 'star', 'تجربه و تخصص', 'سال‌ها تدریس و تجربه موفق در آزمون‌های بین‌المللی' ),
     array( 'heart', 'تعهد و علاقه واقعی', 'من به آموزش و موفقیت شما اهمیت می‌دهم و با تمام توان در کنار شما هستم.' ),
-    array( 'chart', 'نتایج ملموس', 'با تمرکز بر مکالمه، شنیداری و مهارت‌های کاربردی، پیشرفت شما تضمین می‌شود.' ),
+    array( 'chart', 'نتایج ملموس', 'با تمرکز بر مکالمه، شنیداری و مهارت‌های کاربردی، پیشرفت شما را دنبال می‌کنم.' ),
     array( 'chat', 'روش تدریس مدرن و تعاملی', 'استفاده از تکنیک‌های به‌روز و تمرین‌های عملی برای یادگیری عمیق‌تر.' ),
     array( 'users', 'پشتیبانی همیشگی', 'در تمام مراحل یادگیری همراه شما هستم و پاسخگوی سوالاتتان می‌باشم.' ),
     array( 'target', 'برنامه‌ریزی شخصی‌سازی شده', 'با توجه به سطح، هدف و سبک یادگیری شما، برنامه‌ای اختصاصی طراحی می‌کنم.' ),
 );
-
 $stats = array(
     array( 'book', '۳ زبان', 'تسلط به زبان‌های انگلیسی، آلمانی و فرانسه' ),
     array( 'star', '۹۸٪', 'رضایت دانشجویان' ),
@@ -43,7 +40,9 @@ $stats = array(
     array( 'cap', '+۷ سال', 'تجربه تدریس حرفه‌ای' ),
 );
 get_header();
+/* صفحه درباره من به‌صورت مستقل استایل می‌شود؛ این خط تضمین می‌کند حتی اگر enqueue قالب اجرا نشود CSS لود شود. */
 ?>
+<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=2026.09.14-6" media="all">
 <main class="mp-about-page" dir="rtl">
     <section class="mp-about-hero">
         <div class="mp-container mp-about-hero__grid">
@@ -100,7 +99,7 @@ get_header();
         <?php foreach ( $reviews as $review ) : ?><div class="mp-about-testimonial__author">
             <?php if ( ! empty( $review[4] ) ) : ?><?php echo wp_get_attachment_image( $review[4], array( 64, 64 ), false, array( 'class' => 'mp-about-avatar', 'alt' => esc_attr( $review[0] ) ) ); ?><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"></span><?php endif; ?>
             <div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small><span><?php echo str_repeat( '★', (int) $review[3] ); ?></span></div>
-        </div><div class="mp-about-testimonial__text"><strong>« ماتین پارتو فقط یک مدرس نیست؛ »</strong><p><?php echo esc_html( $review[2] ); ?></p></div><?php endforeach; ?>
+        </div><div class="mp-about-testimonial__text"><strong>« متین پارتو فقط یک مدرس نیست؛ »</strong><p><?php echo esc_html( $review[2] ); ?></p></div><?php endforeach; ?>
     </section>
 </main>
 <?php get_footer(); ?>
