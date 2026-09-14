@@ -20,8 +20,9 @@ function matin_parto_register_testimonials() {
         ),
         'public'              => false,
         'show_ui'             => true,
-        'show_in_menu'        => false,
+        'show_in_menu'        => true,
         'show_in_admin_bar'   => true,
+        'menu_position'       => 26,
         'menu_icon'           => 'dashicons-format-chat',
         'supports'            => array( 'title', 'editor', 'thumbnail' ),
         'show_in_rest'        => true,
@@ -31,20 +32,6 @@ function matin_parto_register_testimonials() {
     ) );
 }
 add_action( 'init', 'matin_parto_register_testimonials' );
-
-/* منوی مستقل پیشخوان؛ این منو حتی اگر جایگاه‌های پیش‌فرض وردپرس تغییر کنند نمایش داده می‌شود. */
-function matin_parto_testimonials_admin_menu() {
-    add_menu_page(
-        'نظرات زبان‌آموزان',
-        'نظرات زبان‌آموزان',
-        'edit_posts',
-        'edit.php?post_type=mp_testimonial',
-        '',
-        'dashicons-format-chat',
-        26
-    );
-}
-add_action( 'admin_menu', 'matin_parto_testimonials_admin_menu', 9 );
 
 function matin_parto_testimonial_meta_box() {
     add_meta_box(
