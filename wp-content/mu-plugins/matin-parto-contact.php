@@ -1,7 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-/** Matin Parto contact page: customizer image slots, /contact/ route, form handler and site-wide contact links. */
+/** Matin Parto contact page: customizer image slots, robust /contact/ route, form handler and site-wide contact links. */
 add_action( 'customize_register', function( $wp_customize ) {
     $wp_customize->add_section( 'matin_parto_contact_page', array( 'title' => 'صفحه تماس با ما', 'priority' => 158, 'description' => 'فقط تصاویر صفحه تماس با ما را از این بخش انتخاب یا تغییر دهید.' ) );
     foreach ( array(
@@ -14,14 +14,21 @@ add_action( 'customize_register', function( $wp_customize ) {
     }
 } );
 
-add_filter( 'template_include', function( $template ) {
+function matin_parto_is_contact_request() {
     $path = isset( $_SERVER['REQUEST_URI'] ) ? trim( (string) wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH ), '/' ) : '';
-    if ( 'contact' === basename( $path ) && file_exists( get_theme_file_path( 'page-contact.php' ) ) ) {
-        status_header( 200 );
-        return get_theme_file_path( 'page-contact.php' );
-    }
-    return $template;
-} );
+    return 'contact' === $path || 'contact' === basename( $path );
+}
+
+/* Run before the normal template resolver so /contact/ cannot become a 404 when no WP Page exists. */
+add_action( 'template_redirect', function() {
+    if ( ! matin_parto_is_contact_request() ) return;
+    $template = get_theme_file_path( 'page-contact.php' );
+    if ( ! file_exists( $template ) ) return;
+    status_header( 200 );
+    nocache_headers();
+    include $template;
+    exit;
+}, 0 );
 
 function matin_parto_contact_redirect( $status ) {
     $url = add_query_arg( 'contact', $status, home_url( '/contact/' ) ) . '#contact-form';
@@ -42,7 +49,8 @@ function matin_parto_handle_contact_form() {
 add_action( 'admin_post_matin_parto_contact', 'matin_parto_handle_contact_form' );
 add_action( 'admin_post_nopriv_matin_parto_contact', 'matin_parto_handle_contact_form' );
 
+/* Safety net for old #contact links and any header/footer link labelled تماس با ما. */
 add_action( 'wp_footer', function() {
     $contact_url = esc_url( home_url( '/contact/' ) );
-    echo '<script>(function(){var u=' . wp_json_encode( $contact_url ) . ';function route(){document.querySelectorAll("a").forEach(function(a){var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما")a.setAttribute("href",u);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",route);else route();document.addEventListener("click",function(e){var a=e.target.closest?e.target.closest("a"):null;if(!a)return;var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما")a.setAttribute("href",u);},true);})();</script>';
+    echo '<script>(function(){var u=' . wp_json_encode( $contact_url ) . ';function route(){document.querySelectorAll("a").forEach(function(a){var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما")a.setAttribute("href",u);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",route);else route();document.addEventListener("click",function(e){var a=e.target.closest?a.target.closest("a"):null;if(!a)return;var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما"){e.preventDefault();window.location.href=u;}},true);})();</script>';
 } );
