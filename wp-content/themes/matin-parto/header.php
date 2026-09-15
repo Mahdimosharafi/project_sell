@@ -32,7 +32,7 @@ defined( 'ABSPATH' ) || exit;
                     <li class="<?php echo is_page( 'about' ) ? 'is-current' : ''; ?>"><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>">درباره من</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/#videos' ) ); ?>">ویدیو های آموزشی</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/#blog' ) ); ?>">وبلاگ</a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/#contact' ) ); ?>">تماس با ما</a></li>
+                    <li class="<?php echo ( trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH ), '/' ) === 'contact' ) ? 'is-current' : ''; ?>"><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">تماس با ما</a></li>
                 </ul>
             </nav>
             <div class="mp-header__actions">
