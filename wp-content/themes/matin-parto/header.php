@@ -8,6 +8,7 @@ defined( 'ABSPATH' ) || exit;
 <?php wp_head(); ?>
 <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/assets/css/final-ui-fixes.css?v=20260914-2' ); ?>">
 <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/assets/css/header-footer-restore.css?v=20260915-1' ); ?>">
+<link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() . '/assets/css/site-rtl-final.css?v=20260915-1' ); ?>">
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
