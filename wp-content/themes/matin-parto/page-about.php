@@ -11,7 +11,6 @@ $video_image = $about( 'video_image', '' );
 if ( ! $video_image ) $video_image = $story_image;
 $video_url = $about( 'video_url', '' );
 
-/* The reference design reads from right to left: languages, satisfaction, students, experience. */
 $stats = array(
     array( '۳ زبان', 'تسلط به زبان‌های انگلیسی، آلمانی و فرانسه', 'book' ),
     array( '۹۸٪', 'رضایت دانشجویان', 'star' ),
@@ -23,7 +22,6 @@ foreach ( $stats as $i => $stat ) {
     $stats[$i][0] = $about( 'stat_' . $n, $stat[0] );
     $stats[$i][1] = $about( 'stat_' . $n . '_label', $stat[1] );
 }
-
 $reason_defaults = array(
     array( 'برنامه‌ریزی شخصی‌سازی‌شده', 'با توجه به سطح، هدف و سبک یادگیری شما برنامه اختصاصی طراحی می‌کنم.' ),
     array( 'پشتیبانی همیشگی', 'در تمام مراحل یادگیری همراه شما هستم و به سوالاتتان پاسخ می‌دهم.' ),
@@ -37,16 +35,24 @@ foreach ( $reason_defaults as $i => $default ) {
     $n = $i + 1;
     $reasons[] = array( $about( 'reason_' . $n . '_title', $default[0] ), $about( 'reason_' . $n . '_text', $default[1] ) );
 }
-
 $review_name = $about( 'testimonial_name', 'سارا محمدی' );
 $review_course = $about( 'testimonial_course', 'دانشجوی دوره Intermediate' );
 $review_text = $about( 'testimonial_text', 'متین پارتو فقط یک مدرس نیست، یک همراه واقعی در مسیر یادگیریه. با صبر، انگیزه و روش‌های عالی تدریسش باعث شد با اعتماد به نفس بیشتری صحبت کنم.' );
 $review_rating = max( 1, min( 5, absint( $about( 'testimonial_rating', 5 ) ) ) );
 $review_image = $about( 'testimonial_image', '' );
-
 get_header();
 ?>
-<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260916-4" media="all">
+<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260916-5" media="all">
+<style id="matin-parto-about-final-position">
+/* FINAL POSITIONS — deliberately inline so no cached/theme CSS can override them */
+.mp-about-page .mp-about-hero__visual{position:relative!important;overflow:visible!important}
+.mp-about-page .mp-about-handwrite{position:absolute!important;right:2px!important;left:auto!important;top:50%!important;bottom:auto!important;z-index:20!important;color:#a65368!important;font-family:"Segoe Script","Brush Script MT",cursive!important;font-size:24px!important;font-style:italic!important;font-weight:500!important;line-height:1!important;white-space:nowrap!important;transform:translateY(-50%) rotate(-8deg)!important;text-align:center!important;pointer-events:none!important}
+.mp-about-page .mp-about-hero__actions{position:relative!important;display:block!important;height:112px!important;min-height:112px!important;margin-top:30px!important;direction:rtl!important}
+.mp-about-page .mp-about-hero__actions .mp-button{position:absolute!important;right:0!important;top:0!important;z-index:20!important;margin:0!important}
+.mp-about-page .mp-about-signature{position:absolute!important;left:25px!important;right:auto!important;bottom:4px!important;top:auto!important;z-index:20!important;display:block!important;float:none!important;width:auto!important;margin:0!important;color:#8d6d72!important;font-family:"Segoe Script","Brush Script MT",cursive!important;font-size:29px!important;font-style:italic!important;font-weight:500!important;line-height:1!important;white-space:nowrap!important;transform:rotate(-8deg)!important;direction:ltr!important;text-align:left!important;order:unset!important}
+@media(max-width:900px){.mp-about-page .mp-about-handwrite{right:2px!important;top:50%!important;font-size:22px!important}.mp-about-page .mp-about-hero__actions{height:95px!important;min-height:95px!important}.mp-about-page .mp-about-signature{left:8px!important;font-size:25px!important}}
+@media(max-width:560px){.mp-about-page .mp-about-handwrite{right:0!important;top:52%!important;font-size:20px!important}.mp-about-page .mp-about-hero__actions{height:85px!important;min-height:85px!important}.mp-about-page .mp-about-signature{left:0!important;bottom:0!important;font-size:21px!important}}
+</style>
 <main class="mp-about-page" dir="rtl">
     <section class="mp-about-hero">
         <div class="mp-container mp-about-hero__grid">
@@ -68,11 +74,9 @@ get_header();
             </div>
         </div>
     </section>
-
     <section class="mp-about-stats mp-container" aria-label="آمار">
         <?php foreach ( $stats as $stat ) : ?><div class="mp-about-stat"><span class="mp-about-icon mp-about-icon--<?php echo esc_attr( $stat[2] ); ?>" aria-hidden="true"></span><div><b><?php echo esc_html( $stat[0] ); ?></b><small><?php echo esc_html( $stat[1] ); ?></small></div></div><?php endforeach; ?>
     </section>
-
     <section class="mp-about-story mp-section" id="contact-about">
         <div class="mp-container mp-about-story__grid">
             <div class="mp-about-story__media">
@@ -82,30 +86,17 @@ get_header();
                 <span class="mp-about-video-caption"><?php echo nl2br( esc_html( $about( 'video_caption', "Better\nEnglish\nBigger\nDreams" ) ) ); ?></span>
             </div>
             <div class="mp-about-story__copy">
-                <div class="mp-about-kicker"><?php echo esc_html( $about( 'story_kicker', 'مسیر من' ) ); ?> <i></i></div>
-                <h2><?php echo esc_html( $about( 'story_title', 'چطور وارد دنیای آموزش شدم؟' ) ); ?></h2>
+                <div class="mp-about-kicker"><?php echo esc_html( $about( 'story_kicker', 'مسیر من' ) ); ?> <i></i></div><h2><?php echo esc_html( $about( 'story_title', 'چطور وارد دنیای آموزش شدم؟' ) ); ?></h2>
                 <p><?php echo nl2br( esc_html( $about( 'story_text_1', 'همیشه به زبان و ارتباط با آدم‌های مختلف علاقه داشتم. زمانی که متوجه شدم آموزش زبان می‌تواند زندگی خیلی از افراد را تغییر دهد، تصمیم گرفتم این مسیر را جدی دنبال کنم.' ) ) ); ?></p>
                 <p><?php echo nl2br( esc_html( $about( 'story_text_2', 'بعد از سال‌ها تجربه‌ی یادگیری و تدریس، امروز با افتخار در کنار شما هستم تا بهترین تجربه‌ی یادگیری را رقم بزنیم.' ) ) ); ?></p>
             </div>
         </div>
     </section>
-
-    <section class="mp-about-reasons mp-section">
-        <div class="mp-container">
-            <div class="mp-about-section-head"><div class="mp-about-kicker"><?php echo esc_html( $about( 'why_kicker', 'چرا من؟' ) ); ?> <i></i></div><h2><?php echo esc_html( $about( 'why_title', 'آنچه یادگیری با من را متفاوت می‌کند' ) ); ?></h2></div>
-            <div class="mp-about-reasons-grid">
-                <?php foreach ( $reasons as $i => $reason ) : ?><article class="mp-about-reason"><span class="mp-about-reason__icon mp-about-reason__icon--<?php echo esc_attr( array( 'target','users','star','chat','chart','heart' )[ $i ] ); ?>" aria-hidden="true"></span><div><h3><?php echo esc_html( $reason[0] ); ?></h3><p><?php echo esc_html( $reason[1] ); ?></p></div></article><?php endforeach; ?>
-            </div>
-        </div>
-    </section>
-
-    <section class="mp-about-testimonial mp-container" aria-label="نظر زبان‌آموز">
-        <div class="mp-about-quote">”</div>
-        <div class="mp-about-testimonial__author">
-            <?php if ( $review_image ) : ?><img class="mp-about-avatar" src="<?php echo esc_url( $review_image ); ?>" alt="<?php echo esc_attr( $review_name ); ?>"><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"><?php echo esc_html( mb_substr( $review_name, 0, 1 ) ); ?></span><?php endif; ?>
-            <div><b><?php echo esc_html( $review_name ); ?></b><small><?php echo esc_html( $review_course ); ?></small><span><?php echo str_repeat( '★', $review_rating ); ?></span></div>
-        </div>
-        <div class="mp-about-testimonial__text"><strong><?php echo esc_html( $about( 'testimonial_lead', 'متین پارتو فقط یک مدرس نیست، یک همراه واقعی است.' ) ); ?></strong><p><?php echo esc_html( $review_text ); ?></p></div>
-    </section>
+    <section class="mp-about-reasons mp-section"><div class="mp-container"><div class="mp-about-section-head"><div class="mp-about-kicker"><?php echo esc_html( $about( 'why_kicker', 'چرا من؟' ) ); ?> <i></i></div><h2><?php echo esc_html( $about( 'why_title', 'آنچه یادگیری با من را متفاوت می‌کند' ) ); ?></h2></div><div class="mp-about-reasons-grid">
+        <?php foreach ( $reasons as $i => $reason ) : ?><article class="mp-about-reason"><span class="mp-about-reason__icon mp-about-reason__icon--<?php echo esc_attr( array( 'target','users','star','chat','chart','heart' )[ $i ] ); ?>" aria-hidden="true"></span><div><h3><?php echo esc_html( $reason[0] ); ?></h3><p><?php echo esc_html( $reason[1] ); ?></p></div></article><?php endforeach; ?>
+    </div></div></section>
+    <section class="mp-about-testimonial mp-container" aria-label="نظر زبان‌آموز"><div class="mp-about-quote">”</div><div class="mp-about-testimonial__author">
+        <?php if ( $review_image ) : ?><img class="mp-about-avatar" src="<?php echo esc_url( $review_image ); ?>" alt="<?php echo esc_attr( $review_name ); ?>"><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"><?php echo esc_html( mb_substr( $review_name, 0, 1 ) ); ?></span><?php endif; ?><div><b><?php echo esc_html( $review_name ); ?></b><small><?php echo esc_html( $review_course ); ?></small><span><?php echo str_repeat( '★', $review_rating ); ?></span></div>
+    </div><div class="mp-about-testimonial__text"><strong><?php echo esc_html( $about( 'testimonial_lead', 'متین پارتو فقط یک مدرس نیست، یک همراه واقعی است.' ) ); ?></strong><p><?php echo esc_html( $review_text ); ?></p></div></section>
 </main>
 <?php get_footer(); ?>
