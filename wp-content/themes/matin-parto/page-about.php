@@ -2,108 +2,98 @@
 defined( 'ABSPATH' ) || exit;
 
 $home = function_exists( 'matin_parto_home_settings' ) ? matin_parto_home_settings() : array();
-$about_hero  = get_theme_mod( 'matin_parto_about_hero_image', '' );
-$about_story = get_theme_mod( 'matin_parto_about_story_image', '' );
-$about_extra = get_theme_mod( 'matin_parto_about_extra_image', '' );
-if ( ! $about_hero && ! empty( $home['hero_image'] ) ) $about_hero = $home['hero_image'];
-if ( ! $about_story && ! empty( $home['hero_image'] ) ) $about_story = $home['hero_image'];
-
+$hero_image = get_theme_mod( 'matin_parto_about_hero_image', '' );
+if ( ! $hero_image && ! empty( $home['hero_image'] ) ) $hero_image = $home['hero_image'];
+$story_image = get_theme_mod( 'matin_parto_about_story_image', '' );
+if ( ! $story_image ) $story_image = $hero_image;
 $about_video = function_exists( 'matin_parto_get_about_video' ) ? matin_parto_get_about_video() : null;
 $about_video_image = get_theme_mod( 'matin_parto_about_video_image', '' );
-if ( ! $about_video_image && ! empty( $home['hero_image'] ) ) $about_video_image = $home['hero_image'];
+if ( ! $about_video_image ) $about_video_image = $story_image;
 
-$reviews = array( array( 'سارا محمدی', 'Intermediate زبان‌آموز دوره', '«متین پارتو فقط یک مدرس نیست؛ یک همراه واقعی در مسیر یادگیریه. با صبر، انگیزه و روش‌های عالی تدریس، باعث شد من با اعتماد به نفس بیشتری صحبت کنم.»', 5, 0 ) );
+$stats = array(
+    array( 'book', '+۱۰ سال', 'تجربه تدریس حرفه‌ای' ),
+    array( 'users', '+۵۰۰', 'دانشجوی موفق' ),
+    array( 'star', '۹۸٪', 'رضایت دانشجویان' ),
+    array( 'cap', '۳ زبان', 'تسلط به زبان‌های انگلیسی، آلمانی و فرانسه' ),
+);
+$reasons = array(
+    array( 'target', 'برنامه‌ریزی شخصی‌سازی‌شده', 'با توجه به سطح، هدف و سبک یادگیری شما برنامه اختصاصی طراحی می‌کنم.' ),
+    array( 'users', 'پشتیبانی همیشگی', 'در تمام مراحل یادگیری همراه شما هستم و به سوالاتتان پاسخ می‌دهم.' ),
+    array( 'star', 'تجربه و تخصص', 'سال‌ها تدریس و تجربه موفق در آزمون‌های بین‌المللی.' ),
+    array( 'chat', 'روش تدریس مدرن و تعاملی', 'استفاده از تکنیک‌های به‌روز و تمرین‌های عملی برای یادگیری عمیق‌تر.' ),
+    array( 'chart', 'نتایج ملموس', 'با تمرکز بر مکالمه، شنیداری و مهارت‌های کاربردی، پیشرفت شما را دنبال می‌کنم.' ),
+    array( 'heart', 'تعهد و علاقه واقعی', 'من به آموزش و موفقیت شما اهمیت می‌دهم و با تمام توان در کنارتان هستم.' ),
+);
+$review = array( 'سارا محمدی', 'دانشجوی دوره Intermediate', 'متین پارتو فقط یک مدرس نیست، یک همراه واقعی در مسیر یادگیریه. با صبر، انگیزه و روش‌های عالی تدریسش باعث شد با اعتماد به نفس بیشتری صحبت کنم.', 5, 0 );
 if ( function_exists( 'matin_parto_get_testimonials' ) ) {
     $q = matin_parto_get_testimonials( 1 );
     if ( $q->have_posts() ) {
-        $reviews = array();
-        while ( $q->have_posts() ) {
-            $q->the_post();
-            $rating = max( 1, min( 5, absint( get_post_meta( get_the_ID(), '_mp_testimonial_rating', true ) ?: 5 ) ) );
-            $course = get_post_meta( get_the_ID(), '_mp_testimonial_course', true );
-            $reviews[] = array( get_the_title(), $course, wp_strip_all_tags( get_the_content() ), $rating, get_post_thumbnail_id() );
-        }
+        $q->the_post();
+        $review = array( get_the_title(), get_post_meta( get_the_ID(), '_mp_testimonial_course', true ) ?: 'دانشجوی دوره', wp_strip_all_tags( get_the_content() ), max(1,min(5,absint(get_post_meta(get_the_ID(),'_mp_testimonial_rating',true) ?: 5))), get_post_thumbnail_id() );
         wp_reset_postdata();
     }
 }
 
-$reasons = array(
-    array( 'star', 'تجربه و تخصص', 'سال‌ها تدریس و تجربه موفق در آزمون‌های بین‌المللی' ),
-    array( 'heart', 'تعهد و علاقه واقعی', 'من به آموزش و موفقیت شما اهمیت می‌دهم و با تمام توان در کنار شما هستم.' ),
-    array( 'chart', 'نتایج ملموس', 'با تمرکز بر مکالمه، شنیداری و مهارت‌های کاربردی، پیشرفت شما را دنبال می‌کنم.' ),
-    array( 'chat', 'روش تدریس مدرن و تعاملی', 'استفاده از تکنیک‌های به‌روز و تمرین‌های عملی برای یادگیری عمیق‌تر.' ),
-    array( 'users', 'پشتیبانی همیشگی', 'در تمام مراحل یادگیری همراه شما هستم و پاسخگوی سوالاتتان می‌باشم.' ),
-    array( 'target', 'برنامه‌ریزی شخصی‌سازی شده', 'با توجه به سطح، هدف و سبک یادگیری شما، برنامه‌ای اختصاصی طراحی می‌کنم.' ),
-);
-$stats = array(
-    array( 'book', '۳ زبان', 'تسلط به زبان‌های انگلیسی، آلمانی و فرانسه' ),
-    array( 'star', '۹۸٪', 'رضایت دانشجویان' ),
-    array( 'users', '+۵۰۰', 'دانشجوی موفق' ),
-    array( 'cap', '+۷ سال', 'تجربه تدریس حرفه‌ای' ),
-);
-
 get_header();
 ?>
-<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260915-1" media="all">
-<style id="matin-parto-about-final">
-.mp-about-video-empty{position:absolute;right:20px;left:20px;bottom:18px;background:rgba(38,29,31,.58);color:#fff;border-radius:10px;padding:9px 12px;font-size:11px;text-align:center;backdrop-filter:blur(5px)}
-.mp-about-video-meta{position:absolute;top:14px;right:14px;background:rgba(38,29,31,.62);color:#fff;border-radius:999px;padding:5px 9px;font-size:10px;z-index:4}
-.mp-about-story__media:has(.mp-about-video) .mp-about-video-caption{display:none}
-.mp-about-testimonial .mp-about-quote{grid-column:3!important;grid-row:1!important;text-align:right!important}
-.mp-about-testimonial .mp-about-testimonial__author{grid-column:1!important;grid-row:1!important}
-.mp-about-testimonial .mp-about-testimonial__text{grid-column:2!important;grid-row:1!important}
-@media(max-width:900px){.mp-about-testimonial .mp-about-quote,.mp-about-testimonial .mp-about-testimonial__author,.mp-about-testimonial .mp-about-testimonial__text{grid-column:auto!important;grid-row:auto!important}}
-</style>
+<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260915-2" media="all">
 <main class="mp-about-page" dir="rtl">
     <section class="mp-about-hero">
         <div class="mp-container mp-about-hero__grid">
             <div class="mp-about-hero__visual">
-                <div class="mp-about-hero__dots" aria-hidden="true"></div>
                 <div class="mp-about-hero__arch" aria-hidden="true"></div>
-                <?php if ( $about_hero ) : ?><img src="<?php echo esc_url( $about_hero ); ?>" alt="معرفی مدرس زبان انگلیسی ماتین پرتو" loading="eager" fetchpriority="high">
-                <?php else : ?><div class="mp-about-placeholder">عکس مدرس</div><?php endif; ?>
-                <span class="mp-about-handwrite" aria-hidden="true">About<br>Me</span>
+                <?php if ( $hero_image ) : ?><img src="<?php echo esc_url( $hero_image ); ?>" alt="ماتین پارتو" loading="eager" fetchpriority="high">
+                <?php else : ?><div class="mp-about-placeholder">تصویر مدرس</div><?php endif; ?>
+                <span class="mp-about-handwrite" aria-hidden="true">About Me</span>
             </div>
             <div class="mp-about-hero__copy">
-                <span class="mp-about-kicker">درباره من <i></i></span>
+                <div class="mp-about-kicker">درباره من <i></i></div>
                 <h1>سلام، من متین پارتو هستم</h1>
                 <h2>مدرس زبان انگلیسی</h2>
-                <p>من به آموزش زبان انگلیسی به‌عنوان یک ابزار قدرتمند برای ساختن آینده بهتر باور دارم. در این مسیر، هدف من فقط آموزش گرامر زبان نیست، بلکه همراهی با شما برای رسیدن به اهداف و رویاهایتان است.</p>
+                <p>من به آموزش زبان انگلیسی به‌عنوان یک ابزار قدرتمند برای ساختن آینده‌ی بهتر باور دارم. در این مسیر، هدف من فقط آموزش گرامر زبان نیست، بلکه همراهی با شما برای رسیدن به اهداف و رویاهایتان است.</p>
                 <div class="mp-about-signature">Matin Parto</div>
-                <a class="mp-button mp-button--primary" href="#story">بیشتر درباره من <span>←</span></a>
+                <a class="mp-button mp-button--primary" href="#contact-about">تماس با من <span>←</span></a>
             </div>
         </div>
     </section>
 
-    <section class="mp-about-stats mp-container" aria-label="آمار مدرس">
-        <?php foreach ( $stats as $stat ) : ?><div class="mp-about-stat"><span class="mp-about-icon mp-about-icon--<?php echo esc_attr( $stat[0] ); ?>" aria-hidden="true"></span><div><b><?php echo esc_html( $stat[1] ); ?></b><small><?php echo esc_html( $stat[2] ); ?></small></div></div><?php endforeach; ?>
+    <section class="mp-about-stats mp-container" aria-label="آمار">
+        <?php foreach ( $stats as $stat ) : ?><div class="mp-about-stat"><span class="mp-about-icon mp-about-icon--<?php echo esc_attr($stat[0]); ?>" aria-hidden="true"></span><div><b><?php echo esc_html($stat[1]); ?></b><small><?php echo esc_html($stat[2]); ?></small></div></div><?php endforeach; ?>
     </section>
 
-    <section class="mp-about-story mp-section" id="story">
+    <section class="mp-about-story mp-section" id="contact-about">
         <div class="mp-container mp-about-story__grid">
             <div class="mp-about-story__media">
-                <?php if ( $about_video && ! empty( $about_video['url'] ) ) : ?>
-                    <video class="mp-about-video" style="width:100%;height:100%;object-fit:cover;display:block;" controls preload="metadata" <?php if ( $about_video['thumb'] ) echo 'poster="' . esc_url( wp_get_attachment_image_url( $about_video['thumb'], 'large' ) ) . '"'; ?> aria-label="<?php echo esc_attr( $about_video['title'] ); ?>"><source src="<?php echo esc_url( $about_video['url'] ); ?>" type="video/mp4"></video>
-                    <button class="mp-about-play mp-about-play--video" type="button" aria-label="پخش ویدیو" onclick="var v=this.previousElementSibling; if(v){v.play();this.style.display='none';}">▶</button>
-                <?php elseif ( $about_video_image ) : ?>
-                    <img src="<?php echo esc_url( $about_video_image ); ?>" alt="آموزش زبان انگلیسی" loading="lazy"><span class="mp-about-video-empty">ویدیوی معرفی را از بخش «ویدیوها» اضافه کنید</span>
-                <?php else : ?><div class="mp-about-media-placeholder">ویدیوی معرفی</div><?php endif; ?>
+                <?php if ( $about_video && ! empty( $about_video['url'] ) ) : ?><video class="mp-about-video" controls preload="metadata" <?php if ( ! empty($about_video['thumb']) ) echo 'poster="' . esc_url(wp_get_attachment_image_url($about_video['thumb'],'large')) . '"'; ?>><source src="<?php echo esc_url($about_video['url']); ?>" type="video/mp4"></video>
+                <?php elseif ( $about_video_image ) : ?><img src="<?php echo esc_url($about_video_image); ?>" alt="مسیر آموزش زبان انگلیسی" loading="lazy"><?php else : ?><div class="mp-about-media-placeholder"><span>Better<br>English<br>Bigger<br>Dreams</span></div><?php endif; ?>
+                <?php if ( ! $about_video ) : ?><div class="mp-about-play" aria-hidden="true">▶</div><?php endif; ?>
                 <span class="mp-about-video-caption">Better<br>English<br>Bigger<br>Dreams</span>
-                <?php if ( $about_video && ! empty( $about_video['duration'] ) ) : ?><span class="mp-about-video-meta"><?php echo esc_html( $about_video['duration'] ); ?></span><?php endif; ?>
             </div>
             <div class="mp-about-story__copy">
-                <span class="mp-about-kicker">مسیر من <i></i></span>
+                <div class="mp-about-kicker">مسیر من <i></i></div>
                 <h2>چطور وارد دنیای آموزش شدم؟</h2>
-                <p>همیشه به زبان و ارتباط با آدم‌های مختلف علاقه داشتم. زمانی که متوجه شدم آموزش زبان فقط یک شغل نیست و می‌تواند مسیر زندگی افراد را تغییر دهد، تصمیم گرفتم تمام توانم را برای ساختن یک مسیر یادگیری واقعی به کار بگیرم.</p>
-                <p>بعد از سال‌ها تجربه یادگیری و تدریس، امروز با افتخار در کنار شما هستم تا بهترین تجربه یادگیری را رقم بزنیم.</p>
+                <p>همیشه به زبان و ارتباط با آدم‌های مختلف علاقه داشتم. زمانی که متوجه شدم آموزش زبان می‌تواند زندگی خیلی از افراد را تغییر دهد، تصمیم گرفتم این مسیر را جدی دنبال کنم.</p>
+                <p>بعد از سال‌ها تجربه‌ی یادگیری و تدریس، امروز با افتخار در کنار شما هستم تا بهترین تجربه‌ی یادگیری را رقم بزنیم.</p>
             </div>
         </div>
     </section>
 
-    <section class="mp-about-reasons mp-section" id="why-me"><div class="mp-container"><div class="mp-about-section-head"><span class="mp-about-kicker">چرا من؟ <i></i></span><h2>آنچه یادگیری با من را متفاوت می‌کند</h2></div><div class="mp-about-reasons-grid"><?php foreach ( $reasons as $reason ) : ?><article class="mp-about-reason"><span class="mp-about-reason__icon mp-about-reason__icon--<?php echo esc_attr( $reason[0] ); ?>" aria-hidden="true"></span><h3><?php echo esc_html( $reason[1] ); ?></h3><p><?php echo esc_html( $reason[2] ); ?></p></article><?php endforeach; ?></div></div></section>
+    <section class="mp-about-reasons mp-section">
+        <div class="mp-container">
+            <div class="mp-about-section-head"><div class="mp-about-kicker">چرا من؟ <i></i></div><h2>آنچه یادگیری با من را متفاوت می‌کند</h2></div>
+            <div class="mp-about-reasons-grid">
+                <?php foreach ( $reasons as $reason ) : ?><article class="mp-about-reason"><span class="mp-about-reason__icon mp-about-reason__icon--<?php echo esc_attr($reason[0]); ?>" aria-hidden="true"></span><div><h3><?php echo esc_html($reason[1]); ?></h3><p><?php echo esc_html($reason[2]); ?></p></div></article><?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 
-    <?php if ( $about_extra ) : ?><section class="mp-about-extra mp-container"><img src="<?php echo esc_url( $about_extra ); ?>" alt="تصویر ماتین پرتو" loading="lazy"></section><?php endif; ?>
-
-    <section class="mp-about-testimonial mp-container" aria-label="نظر زبان‌آموز"><div class="mp-about-quote">”</div><?php foreach ( $reviews as $review ) : ?><div class="mp-about-testimonial__author"><?php if ( ! empty( $review[4] ) ) : ?><?php echo wp_get_attachment_image( $review[4], array( 64, 64 ), false, array( 'class' => 'mp-about-avatar', 'alt' => esc_attr( $review[0] ) ) ); ?><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"></span><?php endif; ?><div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small><span><?php echo str_repeat( '★', (int) $review[3] ); ?></span></div></div><div class="mp-about-testimonial__text"><strong>« متین پارتو فقط یک مدرس نیست؛ »</strong><p><?php echo esc_html( $review[2] ); ?></p></div><?php endforeach; ?></section>
+    <section class="mp-about-testimonial mp-container" aria-label="نظر زبان‌آموز">
+        <div class="mp-about-quote">”</div>
+        <div class="mp-about-testimonial__author">
+            <?php if ( ! empty($review[4]) ) : ?><?php echo wp_get_attachment_image($review[4],array(56,56),false,array('class'=>'mp-about-avatar','alt'=>esc_attr($review[0]))); ?><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"><?php echo esc_html(mb_substr($review[0],0,1)); ?></span><?php endif; ?>
+            <div><b><?php echo esc_html($review[0]); ?></b><small><?php echo esc_html($review[1]); ?></small><span><?php echo str_repeat('★',(int)$review[3]); ?></span></div>
+        </div>
+        <div class="mp-about-testimonial__text"><strong>متین پارتو فقط یک مدرس نیست، یک همراه واقعی است.</strong><p><?php echo esc_html($review[2]); ?></p></div>
+    </section>
 </main>
 <?php get_footer(); ?>
