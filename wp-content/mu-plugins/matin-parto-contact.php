@@ -15,9 +15,11 @@ add_action( 'customize_register', function( $wp_customize ) {
 } );
 
 add_filter( 'template_include', function( $template ) {
-    $path = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : '';
-    $path = trim( (string) wp_parse_url( $path, PHP_URL_PATH ), '/' );
-    if ( 'contact' === $path && file_exists( get_theme_file_path( 'page-contact.php' ) ) ) return get_theme_file_path( 'page-contact.php' );
+    $path = isset( $_SERVER['REQUEST_URI'] ) ? trim( (string) wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH ), '/' ) : '';
+    if ( 'contact' === basename( $path ) && file_exists( get_theme_file_path( 'page-contact.php' ) ) ) {
+        status_header( 200 );
+        return get_theme_file_path( 'page-contact.php' );
+    }
     return $template;
 } );
 
@@ -42,5 +44,5 @@ add_action( 'admin_post_nopriv_matin_parto_contact', 'matin_parto_handle_contact
 
 add_action( 'wp_footer', function() {
     $contact_url = esc_url( home_url( '/contact/' ) );
-    echo '<script>(function(){var u=' . wp_json_encode( $contact_url ) . ';function route(){document.querySelectorAll("a").forEach(function(a){var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما"){a.setAttribute("href",u);}})}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",route);}else{route();}document.addEventListener("click",function(e){var a=e.target.closest?e.target.closest("a"):null;if(!a)return;var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما")a.setAttribute("href",u);},true);})();</script>';
+    echo '<script>(function(){var u=' . wp_json_encode( $contact_url ) . ';function route(){document.querySelectorAll("a").forEach(function(a){var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما")a.setAttribute("href",u);});}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",route);else route();document.addEventListener("click",function(e){var a=e.target.closest?e.target.closest("a"):null;if(!a)return;var t=(a.textContent||"").replace(/\\s+/g," ").trim(),h=a.getAttribute("href")||"";if(h==="#contact"||/\\#contact(?:$|-)/.test(h)||t==="تماس با ما")a.setAttribute("href",u);},true);})();</script>';
 } );
