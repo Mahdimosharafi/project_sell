@@ -12,6 +12,12 @@ function matin_parto_about_ui_assets() {
             array( 'matin-parto-main', 'matin-parto-layout-fixes' ),
             '2026.09.15.2'
         );
+        wp_enqueue_style(
+            'matin-parto-about-adjustments',
+            get_template_directory_uri() . '/assets/css/about-page-adjustments.css',
+            array( 'matin-parto-about-page' ),
+            '2026.09.15.3'
+        );
     }
 }
 add_action( 'wp_enqueue_scripts', 'matin_parto_about_ui_assets', 40 );
