@@ -11,12 +11,19 @@ $video_image = $about( 'video_image', '' );
 if ( ! $video_image ) $video_image = $story_image;
 $video_url = $about( 'video_url', '' );
 
-$stats = array();
-for ( $i = 1; $i <= 4; $i++ ) {
-    $stat_defaults = array( 1 => '+۱۰ سال', 2 => '+۵۰۰', 3 => '۹۸٪', 4 => '۳ زبان' );
-    $label_defaults = array( 1 => 'تجربه تدریس حرفه‌ای', 2 => 'دانشجوی موفق', 3 => 'رضایت دانشجویان', 4 => 'تسلط به زبان‌های انگلیسی، آلمانی و فرانسه' );
-    $stats[] = array( $stat_defaults[$i], $label_defaults[$i], $about( 'stat_' . $i, $stat_defaults[$i] ), $about( 'stat_' . $i . '_label', $label_defaults[$i] ) );
+/* The reference design reads from right to left: languages, satisfaction, students, experience. */
+$stats = array(
+    array( '۳ زبان', 'تسلط به زبان‌های انگلیسی، آلمانی و فرانسه', 'book' ),
+    array( '۹۸٪', 'رضایت دانشجویان', 'star' ),
+    array( '+۵۰۰', 'دانشجوی موفق', 'users' ),
+    array( '+۱ سال', 'تجربه تدریس حرفه‌ای', 'cap' ),
+);
+foreach ( $stats as $i => $stat ) {
+    $n = $i + 1;
+    $stats[$i][0] = $about( 'stat_' . $n, $stat[0] );
+    $stats[$i][1] = $about( 'stat_' . $n . '_label', $stat[1] );
 }
+
 $reason_defaults = array(
     array( 'برنامه‌ریزی شخصی‌سازی‌شده', 'با توجه به سطح، هدف و سبک یادگیری شما برنامه اختصاصی طراحی می‌کنم.' ),
     array( 'پشتیبانی همیشگی', 'در تمام مراحل یادگیری همراه شما هستم و به سوالاتتان پاسخ می‌دهم.' ),
@@ -26,7 +33,10 @@ $reason_defaults = array(
     array( 'تعهد و علاقه واقعی', 'من به آموزش و موفقیت شما اهمیت می‌دهم و با تمام توان در کنارتان هستم.' ),
 );
 $reasons = array();
-foreach ( $reason_defaults as $i => $default ) { $n = $i + 1; $reasons[] = array( $about( 'reason_' . $n . '_title', $default[0] ), $about( 'reason_' . $n . '_text', $default[1] ) ); }
+foreach ( $reason_defaults as $i => $default ) {
+    $n = $i + 1;
+    $reasons[] = array( $about( 'reason_' . $n . '_title', $default[0] ), $about( 'reason_' . $n . '_text', $default[1] ) );
+}
 
 $review_name = $about( 'testimonial_name', 'سارا محمدی' );
 $review_course = $about( 'testimonial_course', 'دانشجوی دوره Intermediate' );
@@ -36,7 +46,7 @@ $review_image = $about( 'testimonial_image', '' );
 
 get_header();
 ?>
-<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260915-3" media="all">
+<link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260916-4" media="all">
 <main class="mp-about-page" dir="rtl">
     <section class="mp-about-hero">
         <div class="mp-container mp-about-hero__grid">
@@ -51,14 +61,16 @@ get_header();
                 <h1><?php echo esc_html( $about( 'hero_title', 'سلام، من متین پارتو هستم' ) ); ?></h1>
                 <h2><?php echo esc_html( $about( 'hero_subtitle', 'مدرس زبان انگلیسی' ) ); ?></h2>
                 <p><?php echo nl2br( esc_html( $about( 'hero_text', 'من به آموزش زبان انگلیسی به‌عنوان یک ابزار قدرتمند برای ساختن آینده‌ی بهتر باور دارم. در این مسیر، هدف من فقط آموزش گرامر زبان نیست، بلکه همراهی با شما برای رسیدن به اهداف و رویاهایتان است.' ) ) ); ?></p>
-                <div class="mp-about-signature">Matin Parto</div>
-                <a class="mp-button mp-button--primary" href="#contact-about"><?php echo esc_html( $about( 'hero_button', 'تماس با من' ) ); ?> <span>←</span></a>
+                <div class="mp-about-hero__actions">
+                    <a class="mp-button mp-button--primary" href="#contact-about"><?php echo esc_html( $about( 'hero_button', 'تماس با من' ) ); ?> <span>←</span></a>
+                    <div class="mp-about-signature">Matin Parto</div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="mp-about-stats mp-container" aria-label="آمار">
-        <?php foreach ( $stats as $index => $stat ) : ?><div class="mp-about-stat"><span class="mp-about-icon mp-about-icon--<?php echo esc_attr( array( 'book','users','star','cap' )[ $index ] ); ?>" aria-hidden="true"></span><div><b><?php echo esc_html( $stat[2] ); ?></b><small><?php echo esc_html( $stat[3] ); ?></small></div></div><?php endforeach; ?>
+        <?php foreach ( $stats as $stat ) : ?><div class="mp-about-stat"><span class="mp-about-icon mp-about-icon--<?php echo esc_attr( $stat[2] ); ?>" aria-hidden="true"></span><div><b><?php echo esc_html( $stat[0] ); ?></b><small><?php echo esc_html( $stat[1] ); ?></small></div></div><?php endforeach; ?>
     </section>
 
     <section class="mp-about-story mp-section" id="contact-about">
