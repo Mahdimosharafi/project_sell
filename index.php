@@ -1,11 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-/*
- * Route About pages to the dedicated About template.
- * The active WordPress install in this repository uses the root index.php,
- * so this check must happen before the generic page renderer below.
- */
+/* Route the dedicated About and Contact pages to their templates. */
 if ( is_page() ) {
     $page = get_queried_object();
     $title = $page instanceof WP_Post ? wp_strip_all_tags( $page->post_title ) : '';
@@ -18,12 +14,38 @@ if ( is_page() ) {
         || false !== strpos( $uri, '/about' )
         || false !== strpos( $uri, 'درباره' );
 
+    $is_contact = false !== strpos( $title, 'تماس' )
+        || in_array( $slug, array( 'contact', 'contact-us', 'تماس', 'تماس-با-ما' ), true )
+        || false !== strpos( $uri, '/contact' )
+        || false !== strpos( $uri, 'تماس' );
+
     if ( $is_about ) {
-        $about_template = WP_CONTENT_DIR . '/themes/matin-parto/page-about.php';
-        if ( file_exists( $about_template ) ) {
-            nocache_headers();
-            include $about_template;
-            return;
+        $about_templates = array(
+            get_template_directory() . '/page-about.php',
+            WP_CONTENT_DIR . '/themes/matin-parto/page-about.php',
+            dirname( __FILE__ ) . '/wp-content/themes/matin-parto/page-about.php',
+        );
+        foreach ( $about_templates as $about_template ) {
+            if ( file_exists( $about_template ) ) {
+                nocache_headers();
+                include $about_template;
+                return;
+            }
+        }
+    }
+
+    if ( $is_contact ) {
+        $contact_templates = array(
+            get_template_directory() . '/page-contact.php',
+            WP_CONTENT_DIR . '/themes/matin-parto/page-contact.php',
+            dirname( __FILE__ ) . '/wp-content/themes/matin-parto/page-contact.php',
+        );
+        foreach ( $contact_templates as $contact_template ) {
+            if ( file_exists( $contact_template ) ) {
+                nocache_headers();
+                include $contact_template;
+                return;
+            }
         }
     }
 }
