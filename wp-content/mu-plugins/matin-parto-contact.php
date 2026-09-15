@@ -14,6 +14,11 @@ add_action( 'customize_register', function( $wp_customize ) {
     }
 } );
 
+/* Force Persian presentation for the complete WordPress site. */
+add_filter( 'language_attributes', function( $output ) {
+    return 'dir="rtl" lang="fa-IR"';
+} );
+
 function matin_parto_is_contact_request() {
     $path = isset( $_SERVER['REQUEST_URI'] ) ? trim( (string) wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH ), '/' ) : '';
     return 'contact' === $path || 'contact' === basename( $path );
