@@ -1,0 +1,43 @@
+/* Matin Parto — final Persian RTL layout for the live site and contact page */
+html,body{direction:rtl!important;text-align:right!important}
+body,.mp-site{direction:rtl!important}
+/* Header: exact desktop composition — logo right, navigation center, actions left */
+.mp-header__inner{direction:rtl!important;position:relative!important}
+.mp-brand{right:0!important;left:auto!important;direction:rtl!important}
+.mp-nav{left:50%!important;right:auto!important;direction:rtl!important}
+.mp-nav__list{direction:rtl!important;flex-direction:row!important}
+.mp-header__actions{left:0!important;right:auto!important;direction:rtl!important;flex-direction:row-reverse!important}
+.mp-account{direction:rtl!important}
+/* Contact page */
+.mp-contact-page{direction:rtl!important;text-align:right!important}
+.mp-contact-hero__grid{direction:ltr!important}
+.mp-contact-hero__visual{direction:rtl!important;order:1!important}
+.mp-contact-hero__copy{direction:rtl!important;text-align:right!important;order:2!important}
+.mp-contact-info,.mp-contact-work,.mp-contact-location{direction:rtl!important}
+.mp-contact-form-card,.mp-contact-aside,.mp-contact-location__copy{direction:rtl!important;text-align:right!important}
+.mp-contact-form{direction:rtl!important}
+.mp-contact-form label{text-align:right!important}
+.mp-contact-form input,.mp-contact-form select,.mp-contact-form textarea{direction:rtl!important;text-align:right!important}
+.mp-contact-form__footer{direction:rtl!important}
+.mp-contact-consent{direction:rtl!important}
+.mp-contact-location__copy{align-items:flex-start!important}
+/* Footer: reference composition — about right, categories center-right, quick links center-left, newsletter left */
+.mp-footer-main{direction:ltr!important;display:grid!important;grid-template-columns:1.15fr .9fr .9fr 1.25fr!important}
+.mp-footer-main .mp-footer-newsletter{grid-column:1!important;order:initial!important;direction:rtl!important;text-align:right!important}
+.mp-footer-main .mp-footer-quick-links{grid-column:2!important;order:initial!important;direction:rtl!important;text-align:right!important}
+.mp-footer-main .mp-footer-categories{grid-column:3!important;order:initial!important;direction:rtl!important;text-align:right!important}
+.mp-footer-main .mp-footer-about{grid-column:4!important;order:initial!important;direction:rtl!important;text-align:right!important}
+.mp-footer-column{direction:rtl!important;text-align:right!important}
+.mp-footer-bottom{direction:rtl!important;text-align:right!important}
+.mp-footer-bottom>div{direction:rtl!important}
+@media(max-width:820px){
+ .mp-header__inner{direction:rtl!important}
+ .mp-nav{direction:rtl!important}
+ .mp-nav__list{direction:rtl!important;flex-direction:row!important}
+ .mp-footer-main{direction:rtl!important;grid-template-columns:repeat(2,1fr)!important}
+ .mp-footer-main .mp-footer-newsletter,.mp-footer-main .mp-footer-quick-links,.mp-footer-main .mp-footer-categories,.mp-footer-main .mp-footer-about{grid-column:auto!important}
+ .mp-contact-hero__grid{direction:rtl!important}
+ .mp-contact-hero__visual{order:2!important}
+ .mp-contact-hero__copy{order:1!important}
+}
+@media(max-width:560px){.mp-footer-main{grid-template-columns:1fr!important}.mp-footer-bottom{direction:rtl!important;align-items:flex-start!important}}
