@@ -45,6 +45,15 @@ $stats = array(
 get_header();
 ?>
 <link rel="stylesheet" id="matin-parto-about-page-css" href="<?php echo esc_url( get_theme_file_uri( 'assets/css/about-page.css' ) ); ?>?ver=20260915-1" media="all">
+<style id="matin-parto-about-final">
+.mp-about-video-empty{position:absolute;right:20px;left:20px;bottom:18px;background:rgba(38,29,31,.58);color:#fff;border-radius:10px;padding:9px 12px;font-size:11px;text-align:center;backdrop-filter:blur(5px)}
+.mp-about-video-meta{position:absolute;top:14px;right:14px;background:rgba(38,29,31,.62);color:#fff;border-radius:999px;padding:5px 9px;font-size:10px;z-index:4}
+.mp-about-story__media:has(.mp-about-video) .mp-about-video-caption{display:none}
+.mp-about-testimonial .mp-about-quote{grid-column:3!important;grid-row:1!important;text-align:right!important}
+.mp-about-testimonial .mp-about-testimonial__author{grid-column:1!important;grid-row:1!important}
+.mp-about-testimonial .mp-about-testimonial__text{grid-column:2!important;grid-row:1!important}
+@media(max-width:900px){.mp-about-testimonial .mp-about-quote,.mp-about-testimonial .mp-about-testimonial__author,.mp-about-testimonial .mp-about-testimonial__text{grid-column:auto!important;grid-row:auto!important}}
+</style>
 <main class="mp-about-page" dir="rtl">
     <section class="mp-about-hero">
         <div class="mp-container mp-about-hero__grid">
@@ -74,8 +83,8 @@ get_header();
         <div class="mp-container mp-about-story__grid">
             <div class="mp-about-story__media">
                 <?php if ( $about_video && ! empty( $about_video['url'] ) ) : ?>
-                    <video class="mp-about-video" controls preload="metadata" <?php if ( $about_video['thumb'] ) echo 'poster="' . esc_url( wp_get_attachment_image_url( $about_video['thumb'], 'large' ) ) . '"'; ?> aria-label="<?php echo esc_attr( $about_video['title'] ); ?>"><source src="<?php echo esc_url( $about_video['url'] ); ?>" type="video/mp4"></video>
-                    <button class="mp-about-play mp-about-play--video" type="button" aria-label="پخش ویدیو">▶</button>
+                    <video class="mp-about-video" style="width:100%;height:100%;object-fit:cover;display:block;" controls preload="metadata" <?php if ( $about_video['thumb'] ) echo 'poster="' . esc_url( wp_get_attachment_image_url( $about_video['thumb'], 'large' ) ) . '"'; ?> aria-label="<?php echo esc_attr( $about_video['title'] ); ?>"><source src="<?php echo esc_url( $about_video['url'] ); ?>" type="video/mp4"></video>
+                    <button class="mp-about-play mp-about-play--video" type="button" aria-label="پخش ویدیو" onclick="var v=this.previousElementSibling; if(v){v.play();this.style.display='none';}">▶</button>
                 <?php elseif ( $about_video_image ) : ?>
                     <img src="<?php echo esc_url( $about_video_image ); ?>" alt="آموزش زبان انگلیسی" loading="lazy"><span class="mp-about-video-empty">ویدیوی معرفی را از بخش «ویدیوها» اضافه کنید</span>
                 <?php else : ?><div class="mp-about-media-placeholder">ویدیوی معرفی</div><?php endif; ?>
@@ -91,16 +100,10 @@ get_header();
         </div>
     </section>
 
-    <section class="mp-about-reasons mp-section" id="why-me">
-        <div class="mp-container"><div class="mp-about-section-head"><span class="mp-about-kicker">چرا من؟ <i></i></span><h2>آنچه یادگیری با من را متفاوت می‌کند</h2></div>
-            <div class="mp-about-reasons-grid"><?php foreach ( $reasons as $reason ) : ?><article class="mp-about-reason"><span class="mp-about-reason__icon mp-about-reason__icon--<?php echo esc_attr( $reason[0] ); ?>" aria-hidden="true"></span><h3><?php echo esc_html( $reason[1] ); ?></h3><p><?php echo esc_html( $reason[2] ); ?></p></article><?php endforeach; ?></div>
-        </div>
-    </section>
+    <section class="mp-about-reasons mp-section" id="why-me"><div class="mp-container"><div class="mp-about-section-head"><span class="mp-about-kicker">چرا من؟ <i></i></span><h2>آنچه یادگیری با من را متفاوت می‌کند</h2></div><div class="mp-about-reasons-grid"><?php foreach ( $reasons as $reason ) : ?><article class="mp-about-reason"><span class="mp-about-reason__icon mp-about-reason__icon--<?php echo esc_attr( $reason[0] ); ?>" aria-hidden="true"></span><h3><?php echo esc_html( $reason[1] ); ?></h3><p><?php echo esc_html( $reason[2] ); ?></p></article><?php endforeach; ?></div></div></section>
 
     <?php if ( $about_extra ) : ?><section class="mp-about-extra mp-container"><img src="<?php echo esc_url( $about_extra ); ?>" alt="تصویر ماتین پرتو" loading="lazy"></section><?php endif; ?>
 
-    <section class="mp-about-testimonial mp-container" aria-label="نظر زبان‌آموز"><div class="mp-about-quote">”</div>
-        <?php foreach ( $reviews as $review ) : ?><div class="mp-about-testimonial__author"><?php if ( ! empty( $review[4] ) ) : ?><?php echo wp_get_attachment_image( $review[4], array( 64, 64 ), false, array( 'class' => 'mp-about-avatar', 'alt' => esc_attr( $review[0] ) ) ); ?><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"></span><?php endif; ?><div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small><span><?php echo str_repeat( '★', (int) $review[3] ); ?></span></div></div><div class="mp-about-testimonial__text"><strong>« متین پارتو فقط یک مدرس نیست؛ »</strong><p><?php echo esc_html( $review[2] ); ?></p></div><?php endforeach; ?>
-    </section>
+    <section class="mp-about-testimonial mp-container" aria-label="نظر زبان‌آموز"><div class="mp-about-quote">”</div><?php foreach ( $reviews as $review ) : ?><div class="mp-about-testimonial__author"><?php if ( ! empty( $review[4] ) ) : ?><?php echo wp_get_attachment_image( $review[4], array( 64, 64 ), false, array( 'class' => 'mp-about-avatar', 'alt' => esc_attr( $review[0] ) ) ); ?><?php else : ?><span class="mp-about-avatar mp-about-avatar--placeholder"></span><?php endif; ?><div><b><?php echo esc_html( $review[0] ); ?></b><small><?php echo esc_html( $review[1] ); ?></small><span><?php echo str_repeat( '★', (int) $review[3] ); ?></span></div></div><div class="mp-about-testimonial__text"><strong>« متین پارتو فقط یک مدرس نیست؛ »</strong><p><?php echo esc_html( $review[2] ); ?></p></div><?php endforeach; ?></section>
 </main>
 <?php get_footer(); ?>
