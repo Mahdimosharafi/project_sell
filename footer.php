@@ -8,7 +8,19 @@ $terms_url        = get_theme_mod( 'matin_parto_footer_terms_url', '' );
 $footer_hover_color = sanitize_hex_color( get_theme_mod( 'matin_parto_footer_hover_color', '#7b2636' ) );
 if ( ! $footer_hover_color ) { $footer_hover_color = '#7b2636'; }
 $cta_image = esc_url( get_theme_mod( 'matin_parto_cta_image', '' ) );
-$socials = array('whatsapp'=>esc_url(get_theme_mod('matin_parto_social_whatsapp','')),'telegram'=>esc_url(get_theme_mod('matin_parto_social_telegram','')),'instagram'=>esc_url(get_theme_mod('matin_parto_social_instagram','')),'youtube'=>esc_url(get_theme_mod('matin_parto_social_youtube','')));
+/* لینک شبکه‌های اجتماعی: اگر در تنظیمات (پیشخوان » نمایش » سفارشی‌سازی » شبکه‌های اجتماعی) لینکی
+   ثبت نشده باشد، از لینک پیش‌فرض استفاده می‌شود تا آیکون‌ها همیشه نمایش داده شوند. */
+$social_defaults = array(
+    'whatsapp'  => 'https://wa.me/989123456789',
+    'telegram'  => 'https://t.me/matinparto',
+    'instagram' => 'https://instagram.com/matinparto',
+    'youtube'   => 'https://youtube.com/@matinparto',
+);
+$socials = array();
+foreach ( $social_defaults as $social_key => $social_default ) {
+    $social_url = trim( (string) get_theme_mod( 'matin_parto_social_' . $social_key, '' ) );
+    $socials[ $social_key ] = esc_url( '' !== $social_url ? $social_url : $social_default );
+}
 ?>
 <style id="matin-parto-footer-hover-fix">
 .mp-footer .mp-footer-column a:hover,.mp-footer .mp-footer-column a:hover *,.mp-footer .mp-footer-column a:focus-visible,.mp-footer .mp-footer-column a:focus-visible *, .mp-footer .mp-footer-column li:hover>a,.mp-footer .mp-footer-column li:hover>a *, .mp-footer .mp-footer-column .menu-item:hover>a,.mp-footer .mp-footer-column .menu-item:hover>a *, .mp-footer .mp-footer-column .menu-item>a:hover,.mp-footer .mp-footer-column .menu-item>a:hover *, .mp-footer .mp-footer-column nav a:hover,.mp-footer .mp-footer-column nav a:hover *, .mp-footer .mp-footer-column .widget a:hover,.mp-footer .mp-footer-column .widget a:hover *{color:<?php echo esc_attr($footer_hover_color);?>!important;-webkit-text-fill-color:<?php echo esc_attr($footer_hover_color);?>!important;opacity:1!important}
